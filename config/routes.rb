@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :foods
   get 'home/hello'
   get 'home/goodbye'
 
