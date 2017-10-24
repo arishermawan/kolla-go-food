@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Buyers</h1>
+
+<table>
+    <% @buyers.each do |buyer| %>
+      <tr class="<%= cycle('list_line_odd','list_line_even')%>">
+        
+        <td class="list_description">
+          <d1>
+            <dt><%= buyer.name %></dt>
+            <dd><%= buyer.email %></dd>
+            <dd><%= buyer.phone %></dd>
+            <dd><%= buyer.address %></dd>
+          </d1>
+        </td>
+
+        <td class="list_action"> 
+          <%= link_to 'Show', buyer %>
+          <%= link_to 'Edit', edit_buyer_path(buyer) %>
+          <%= link_to 'Destroy', buyer, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Buyer', new_buyer_path %>
