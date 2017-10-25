@@ -89,5 +89,40 @@ describe Food do
     expect(Food.by_letter("N")).not_to eq(food2)
   end
 
+  describe "filter name by letter" do
+    before :each do
+      @food1 = Food.create(
+        name: "Nasi Uduk",
+        description: "Betawi style steamed rice cooked in coconut milk. Delicious!",
+        price: 10000.0
+      )
+
+      @food2 = Food.create(
+        name: "Kerak Telor",
+        description: "Betawi style traditonal spicy ommelete wit glutinous rice cooker",
+        price: 8000.0
+      )
+
+      @food3 = Food.create(
+        name: "Nasi Semur Jengkol",
+        description: "Based on dongfruit, this menu promises a delicious taste",
+        price: 8000.0
+      )
+    end
+
+    context "it macthing letters" do
+      it "returns a sorted array of results that match" do
+        expect(Food.by_letter("N")).to eq([@food3, @food1])
+      end
+    end
+
+    context "with non matching letters do" do
+      it "omits results that do not match" do
+         expect(Food.by_letter("N")).not_to eq(@food2)
+      end
+    end
+
+  end
+
 
 end
