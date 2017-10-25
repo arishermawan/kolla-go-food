@@ -3,56 +3,59 @@ require 'rails_helper'
 describe Food do
 
   it "is valid with a name and description" do
-    food = Food.new(
-      name: "Nasi Uduk",
-      description: "Betawi style steamed rice cooked in coconut milk. Delicious!",
-      price: 10000.0
-    )
+    # food = Food.new(
+    #   name: "Nasi Uduk",
+    #   description: "Betawi style steamed rice cooked in coconut milk. Delicious!",
+    #   price: 10000.0
+    # )
+    expect(FactoryGirl.build(:food)).to be_valid
   end
 
-   describe "is invalid without a name or description" do
-    before :each do
-      @food = Food.new(
-        name: nil,
-        description: nil,
-        price: 10000.0
-      )
-    end
+  # describe "is invalid without a name or description" do
+  #   before :each do
+  #     @food = Food.new(
+  #       name: nil,
+  #       description: nil,
+  #       price: 10000.0
+  #     )
+  #   end
 
-    context "without name" do
-      it "is invalid without name" do
-        @food.valid?
-        expect(@food.errors[:name]).to include("can't be blank")
-      end
-    end
+  #   context "without name" do
+  #     it "is invalid without name" do
+  #       @food.valid?
+  #       expect(@food.errors[:name]).to include("can't be blank")
+  #     end
+  #   end
 
-    context "without description" do
-      it "is invalid without description" do
-        @food.valid?
-        expect(@food.errors[:description]).to include("can't be blank")
-      end
-    end
+  #   context "without description" do
+  #     it "is invalid without description" do
+  #       @food.valid?
+  #       expect(@food.errors[:description]).to include("can't be blank")
+  #     end
+  #   end
+  # end
+
+  it "is invalid without a name" do
+    # food = Food.new(
+    #   name: nil,
+    #   description: "Betawi style steamed rice cooked in coconut milk. Delicious!",
+    #   price: 10000.0
+    # )
+    food = FactoryGirl.build(:food, name: nil)
+    food.valid?
+    expect(food.errors[:name]).to include("can't be blank")
   end
 
-  # it "is invalid without a name" do
-  #   food = Food.new(
-  #     name: nil,
-  #     description: "Betawi style steamed rice cooked in coconut milk. Delicious!",
-  #     price: 10000.0
-  #   )
-  #   food.valid?
-  #   expect(food.errors[:name]).to include("can't be blank")
-  # end
-
-  # it "is invalid without a description" do
-  #   food = Food.new(
-  #     name: "Nasi Uduk",
-  #     description: nil,
-  #     price: 10000.0
-  #   )
-  #   food.valid?
-  #   expect(food.errors[:description]).to include("can't be blank")
-  # end
+  it "is invalid without a description" do
+    # food = Food.new(
+    #   name: "Nasi Uduk",
+    #   description: nil,
+    #   price: 10000.0
+    # )
+    food = FactoryGirl.build(:food, description: nil)
+    food.valid?
+    expect(food.errors[:description]).to include("can't be blank")
+  end
 
   it "is invalid with a duplicate name" do
     food1 = Food.create(
@@ -196,8 +199,23 @@ describe Food do
     food.valid?
     expect(food.errors[:image_url]).to include("must be a URL for GIF, JPG, or PNG Image.")
   end
-   
 
 
+
+
+
+  it "is invalid with a duplicate name" do
+    food1 = FactoryGirl.create(:food, name: "Nasi Kuning")
+    food2 = FactoryGirl.build(:food, name: "Nasi Kuning")
+    food2.valid?
+    expect(food2.errors[:name]).to include("has already been taken")
+  end
+
+
+  describe Food do
+    it "has a valid factory" do
+      expect(FactoryGirl.build(:food)).to be_valid
+    end
+  end
 
 end
