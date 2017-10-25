@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :food do
-    name "Nasi Uduk"
+    name { Faker::Food.dish }
     description "Betawi"
     price 10000.0
   end

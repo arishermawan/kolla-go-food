@@ -207,7 +207,6 @@ describe Food do
     expect(food2.errors[:name]).to include("has already been taken")
   end
 
-
   describe Food do
     it "has a valid factory" do
       expect(build(:food)).to be_valid
