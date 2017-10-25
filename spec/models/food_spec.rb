@@ -10,25 +10,49 @@ describe Food do
     )
   end
 
-  it "is invalid without a name" do
-    food = Food.new(
-      name: nil,
-      description: "Betawi style steamed rice cooked in coconut milk. Delicious!",
-      price: 10000.0
-    )
-    food.valid?
-    expect(food.errors[:name]).to include("can't be blank")
+   describe "is invalid without a name or description" do
+    before :each do
+      @food = Food.new(
+        name: nil,
+        description: nil,
+        price: 10000.0
+      )
+    end
+
+    context "without name" do
+      it "is invalid without name" do
+        @food.valid?
+        expect(@food.errors[:name]).to include("can't be blank")
+      end
+    end
+
+    context "without description" do
+      it "is invalid without description" do
+        @food.valid?
+        expect(@food.errors[:description]).to include("can't be blank")
+      end
+    end
   end
 
-  it "is invalid without a description" do
-    food = Food.new(
-      name: "Nasi Uduk",
-      description: nil,
-      price: 10000.0
-    )
-    food.valid?
-    expect(food.errors[:description]).to include("can't be blank")
-  end
+  # it "is invalid without a name" do
+  #   food = Food.new(
+  #     name: nil,
+  #     description: "Betawi style steamed rice cooked in coconut milk. Delicious!",
+  #     price: 10000.0
+  #   )
+  #   food.valid?
+  #   expect(food.errors[:name]).to include("can't be blank")
+  # end
+
+  # it "is invalid without a description" do
+  #   food = Food.new(
+  #     name: "Nasi Uduk",
+  #     description: nil,
+  #     price: 10000.0
+  #   )
+  #   food.valid?
+  #   expect(food.errors[:description]).to include("can't be blank")
+  # end
 
   it "is invalid with a duplicate name" do
     food1 = Food.create(
@@ -121,8 +145,59 @@ describe Food do
          expect(Food.by_letter("N")).not_to eq(@food2)
       end
     end
-
   end
+
+  describe "price must be numeric" do
+    before :each do
+      @food1 = Food.new(
+        name: "Nasi Uduk",
+        description: "Betawi style steamed rice cooked in coconut milk. Delicious!",
+        price: 10000.0
+      )
+
+      @food2 = Food.new(
+        name: "Kerak Telor",
+        description: "Betawi style traditonal spicy ommelete wit glutinous rice cooker",
+        price: "1000abc"
+      )
+    end
+
+    context "with numeric input price" do
+      it "is valid price numeric" do
+        expect(@food1.valid?).to eq(true)
+      end
+    end
+
+    context "with non numeric input price" do
+      it "is invalid price numeric" do
+        @food2.valid?
+        expect(@food2.errors[:price]).to include("is not a number")
+      end
+    end
+  end
+
+  it "is invalid if price less than 0.01" do
+    food = Food.new(
+      name: "Nasi Uduk",
+      description: "Betawi style steamed rice cooked in coconut milk. Delicious!",
+      price: 0
+    )
+    food.valid?
+    expect(food.errors[:price]).to include("must be greater than or equal to 0.01")
+  end
+
+  it "is invalid if image url string end with anything other than \".gif\", \".jpg\" or\".png\", " do
+    food = Food.new(
+      name: "Nasi Uduk",
+      description: "Betawi style steamed rice cooked in coconut milk. Delicious!",
+      price: 10000.0,
+      image_url:"tenderloin"
+    )
+    food.valid?
+    expect(food.errors[:image_url]).to include("must be a URL for GIF, JPG, or PNG Image.")
+  end
+   
+
 
 
 end
