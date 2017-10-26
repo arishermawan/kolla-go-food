@@ -4,7 +4,8 @@ class BuyersController < ApplicationController
   # GET /buyers
   # GET /buyers.json
   def index
-    @buyers = Buyer.all
+    # @buyers = Buyer.all
+    @buyers = params[:letter].nil? ? Buyer.all : Buyer.by_letter(params[:letter])
   end
 
   # GET /buyers/1
