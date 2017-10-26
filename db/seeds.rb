@@ -39,3 +39,30 @@ Food.create!(
   image_url:"tutug_oncom.jpg",
   price: 17000.00
   )
+
+Buyer.delete_all
+
+Buyer.create!(
+  email: "arishermawan@hotmail.com",
+  name:"aris hermawan",
+  phone: "082310232303",
+  address: "jln azalea raya no 3 lippo cikarang"
+)
+
+Buyer.create!(
+  email: "i@arishermawan.id",
+  name:"aris hermawan",
+  phone: "082310232303",
+  address: "jln azalea raya no 2 lippo cikarang"
+)
+
+Buyer.create!(
+  email: "rizhima@gmail.com",
+  name:"aris hermawan",
+  phone: "082310232303",
+  address: "jln azalea raya no 1 lippo cikarang"
+)
+
+
+
+
