@@ -39,5 +39,15 @@ describe LineItemsController do
       post :create, params: { food_id: @food.id }
       expect(response).to redirect_to(cart_path(assigns(:line_item).cart))
     end
+
+
+    it "does not change the number of line items if same food is added" do
+
+    end
+    
+    it "increment the quantity of line item if same food added" do
+
+    end
+
   end
 end
