@@ -1,4 +1,5 @@
 <p id="notice"><%= notice %></p>
+
 <h1>Your Food Catalog</h1>
 
 <% @foods.each do |food| %>
@@ -8,7 +9,8 @@
     <%= sanitize(food.description) %>
     <div class="price_line">
       <span class="price">
-        <%= number_to_currency(food.price, unit: "Rp ", delimiter: ".", separator: ",") %>    
+        <%= number_to_currency(food.price, unit: "Rp ", delimiter: ".", separator: ",") %>
+        <%= button_to 'Add to Cart', line_items_path(food_id: food) %>    
       </span>
     </div> 
 

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :buyers
   get 'home/hello'
   get 'home/goodbye'
+  resources :line_items
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
