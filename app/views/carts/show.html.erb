@@ -1,11 +1,21 @@
 <p id="notice"><%= notice %></p>
 
 <h2>Your Cart</h2>
-<ul>
+<table>
+<% total_price = 0.0 %>
   <% @cart.line_items.each do |item| %>
-    <li><%= item.food.name %></li>
+    <tr>
+    <td><%= item.quantity %></td>
+    <td><%= item.food.name %></td>
+    <td class="item_price"><%= number_to_currency(item.quantity * item.food.price, unit: "Rp", delimiter: ".", separator: ",") %></td>
+    </tr>
+    <% total_price += (item.quantity* item.food.price) %>
   <% end %>
-</ul>
+    <tr class="total_line">
+      <td colspan="2">Total</td>
+      <td class="total_cell"><%= number_to_currency(total_price, unit: "Rp ", delimiter: ".", separator: ",")  %></td>
+    </tr>
+
+</table>
 
 <%= link_to 'Edit', edit_cart_path(@cart) %> |
-<%= link_to 'Back', carts_path %>

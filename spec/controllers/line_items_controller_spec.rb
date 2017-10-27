@@ -40,14 +40,30 @@ describe LineItemsController do
       expect(response).to redirect_to(cart_path(assigns(:line_item).cart))
     end
 
+    context "with existing food" do
+      it "does add a new line_item in the database" do
+        cart = create(:cart)
+        line_item =  create(:line_item, food:@food, cart:cart)
 
-    it "does not change the number of line items if same food is added" do
+        expect{
+          post :create, params: {food_id: @food.id}
+        }.not_to change(LineItem, count)
+      end
 
+      it "increment the quantity of line_item with the same food" do
+        cart = create(:cart)
+        line_item =  create(:line_item, food:@food, cart:cart)
+        post :create, params: {food_id: @food.id}
+        expect(line_item.quantity).to eq(2)
+      end
     end
-    
-    it "increment the quantity of line item if same food added" do
 
+    context "without existing food" do
+      it "saves the new line_item in the database" do
+        expect{
+          post :create, params: {food_id: @food.id}
+        }.not_to change(LineItem, count).by(1)
+      end
     end
-
   end
 end
