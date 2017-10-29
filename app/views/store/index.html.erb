@@ -7,6 +7,7 @@
     <%= image_tag(food.image_url) %> 
     <h3><%= food.name %></h3>
     <%= sanitize(food.description) %>
+    <h2><%= food.category_id %></h2>
     <div class="price_line">
       <span class="price">
         <%= number_to_currency(food.price, unit: "Rp ", delimiter: ".", separator: ",") %>
