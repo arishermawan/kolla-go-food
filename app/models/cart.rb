@@ -14,7 +14,7 @@ class Cart < ApplicationRecord
   def self.total_price(cart)
     total=0
     cart.line_items.each do |item|  
-      total += item.quantity * item.food.price
+      total += LineItem.total_price(item)
     end
     total
   end

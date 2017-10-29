@@ -7,7 +7,7 @@
     <tr>
     <td><%= item.quantity %></td>
     <td><%= item.food.name %></td>
-    <td class="item_price"><%= number_to_currency(LineItem.total_price(item.quantity, item.food.price), unit: "Rp", delimiter: ".", separator: ",") %></td>
+    <td class="item_price"><%= number_to_currency(LineItem.total_price(item), unit: "Rp", delimiter: ".", separator: ",") %></td>
     </tr>
   <% end %>
     <tr class="total_line">
