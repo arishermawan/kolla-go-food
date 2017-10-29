@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Foods</h1>
+
+<table>
+    <% @categories.each do |category| %>
+      <tr class="<%= cycle('list_line_odd','list_line_even')%>">
+        <td>
+        </td>
+        <td class="list_description">
+          <d1>
+            <dt><%= category.id %></dt>
+            <dd><%= category.name %></dd>
+          </d1>
+        </td>
+
+        <td class="list_action">
+
+          <%= link_to 'Show', category %>
+          <%= link_to 'Edit', edit_category_path(category) %>
+          <%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+        </td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<%= link_to 'New Category', new_category_path %>

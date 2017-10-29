@@ -20,6 +20,20 @@
           <li><a href="#">My Account</a></li>
           <li><a href="#">My Orders</a></li>
         </ul>
+
+        <br>
+        <br>
+        <div style="color: white;">
+          <h3>Categories :</h3>
+          <ul>
+          <% @cat=Category.all %>
+          <% @cat.each do |category| %>
+          <% if category.foods.length != 0 %>
+            <li><%= link_to category.name, category %></li>
+            <% end %>
+          <% end %>
+          </ul>
+        </div>
       </div>
       <div id="main">
     <%= yield %>
