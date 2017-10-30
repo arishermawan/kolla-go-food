@@ -7,15 +7,12 @@
     <tr>
     <td><%= item.quantity %></td>
     <td><%= item.food.name %></td>
-    <td class="item_price"><%= number_to_currency(LineItem.total_price(item), unit: "Rp", delimiter: ".", separator: ",") %></td>
+    <td class="item_price"><%= number_to_currency(item.total_price, unit: "Rp", delimiter: ".", separator: ",") %></td>
     </tr>
   <% end %>
     <tr class="total_line">
       <td colspan="2">Total</td>
-      <td class="total_cell"><%= number_to_currency(Cart.total_price(@cart), unit: "Rp ", delimiter: ".", separator: ",")  %></td>
+      <td class="total_cell"><%= number_to_currency(@cart.total_price, unit: "Rp ", delimiter: ".", separator: ",")  %></td>
     </tr>
 </table>
-
-<%= @cart.id %>
-
-<%= link_to 'Edit', edit_cart_path(@cart) %> |
+<%= link_to 'Back', store_index_path %>
