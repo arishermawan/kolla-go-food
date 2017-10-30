@@ -1,8 +1,8 @@
 class CategoriesController < ApplicationController
-  # before_action :set_category, only: [:show, :edit, :update, :destroy]
+  
   def show
     @category = Category.find(params[:id])
-    @foods= Food.where(category_id: params[:id] )
+    @foods= Category.by_category( params[:id] )
   end
 
   def index
@@ -44,7 +44,7 @@ class CategoriesController < ApplicationController
 
   def destroy
     @category = Category.find(params[:id])
-    if category_empty?(@category)
+    if Category.category_empty?(@category)
       @category.destroy
       respond_to do |format|
         format.html { redirect_to categories_url, notice: 'Category was successfully destroyed.' }
@@ -58,10 +58,6 @@ class CategoriesController < ApplicationController
   end
 
   private
-
-  def category_empty?(category)
-    category.foods.length == 0
-  end
 
   def food_params
     params.require(:category).permit(:name)

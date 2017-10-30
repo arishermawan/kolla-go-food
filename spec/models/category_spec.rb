@@ -22,12 +22,60 @@ describe Category do
     expect(cat2.errors[:name]).to include("has already been taken")
   end
 
-  # it "is valid if delete empty category" do
-  #   cat1 = create(:category, id: 1, name: "drink")
-  #   food1 = create(:food, category_id: 1)
+    it "is invalid with a duplicate name" do
+    cat1 = create(:category, name: "drink")
+    cat2 = build(:category, name: "drink")
 
-  #   cat2.valid?
-  #   expect(cat2.errors[:name]).to include("has already been taken")
-  # end
+    cat2.valid?
+    expect(cat2.errors[:name]).to include("has already been taken")
+  end
 
+
+  describe "check category is have empty food" do
+    before :each do
+      @cat1 = create(:category, name:"Traditional", id: 1)
+      @cat2 = create(:category, name:"Fast Food", id: 2)
+
+      @food1 = create(:food, name:"Nasi Rames", category_id: 1)
+      @food2 = create(:food, name:"Semangka", category_id: 1)
+
+    end
+
+    context "it dont have association with food" do
+      it "return a true " do
+         expect(Category.category_empty?(@cat2)).to eq(true)
+      end
+    end
+
+    context "it have association with food" do
+      it "returns a false" do
+        expect(Category.category_empty?(@cat1)).to eq(false)
+      end
+    end
+  end
+
+
+  describe "filter Food by category_id" do
+    before :each do
+      @cat1 = create(:category, name:"Traditional", id: 1)
+      @cat2 = create(:category, name:"Fast Food", id: 2)
+
+      @food1 = create(:food, name:"Nasi Rames", category_id: 1)
+      @food2 = create(:food, name:"Semangka", category_id: 1)
+      @food3 = create(:food, name:"Semangkas", category_id: 2)
+    end
+
+    context "it macthing category_id" do
+      it "returns a sorted array of results that match" do
+        expect(Category.by_category(1)).to eq([@food1, @food2])
+      end
+    end
+
+    context "with non matching letters do" do
+      it "omits results that do not match" do
+         expect(Category.by_category(1)).not_to eq(@food3)
+      end
+    end
+  end
 end
+  
