@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Category do
 
-  it "is valid with a name and description" do
+  it "is valid with a name" do
     expect(build(:category)).to be_valid
   end
 
@@ -31,7 +31,7 @@ describe Category do
   end
 
 
-  describe "check category is have empty food" do
+  describe "check category is empty food" do
     before :each do
       @cat1 = create(:category, name:"Traditional", id: 1)
       @cat2 = create(:category, name:"Fast Food", id: 2)
@@ -52,6 +52,14 @@ describe Category do
         expect(Category.category_empty?(@cat1)).to eq(false)
       end
     end
+  end
+
+  it "cant be destroyed while it has food(s)" do
+    category = create(:category)
+    food = create(:food, category: category)
+    category.foods << food
+    
+    expect {category.destroy}.not_to change(Category, :count)
   end
 
 

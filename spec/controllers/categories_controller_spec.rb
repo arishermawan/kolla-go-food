@@ -23,6 +23,14 @@ describe CategoriesController do
       expect(assigns(:category)).to eq category
     end
 
+    it "populates a list of all foods in the category" do
+      category = create(:category)
+      @food1 = create(:food, category: category)
+      @food2 = create(:food, category: category)
+      get :show, params: {id:category}
+      expect(assigns(:category).foods).to match_array{[food1, food2]}
+    end
+
     it "render the :show template" do
       category = create(:category)
       get :show, params:{id: category}
@@ -123,8 +131,7 @@ describe CategoriesController do
   describe 'DELETE #destroy' do
     before :each do
       @category = create(:category, name:"Traditional", id:1)
-      @category2 = create(:category, name:"Fast Food", id:2)
-      @food = create(:food, category_id: 2) 
+ 
     end
 
     context 'with empty food associaton in database' do
@@ -142,16 +149,16 @@ describe CategoriesController do
 
     context 'with not empty food associaton in database' do
       it "dont delete the category from the database" do
+        @food = create(:food, category: @category) 
         expect{
-          delete :destroy, params: { id: @category2 }
+          delete :destroy, params: { id: @category }
         }.not_to change(Category, :count) 
       end
 
       it "redirects to the category#index" do
-        delete :destroy, params: { id: @category2 }
+        delete :destroy, params: { id: @category }
         expect(response).to redirect_to categories_url
       end
     end
   end
-
 end
