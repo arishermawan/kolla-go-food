@@ -5,7 +5,11 @@
 <% @foods.each do |food| %>
   <div class="entry">
     <%= image_tag(food.image_url) %> 
-    <h3><%= food.name %> (<%= food.category.name %>)</h3>
+    <h3><%= food.name %> 
+      <% if food.category_id != nil  %>
+        (<%= food.category.name %>)
+      <% end %>
+    </h3>
     <%= sanitize(food.description) %>
     <div class="price_line">
       <span class="price">

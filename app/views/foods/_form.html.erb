@@ -33,7 +33,7 @@
 
   <div class="field">
     <%= form.label :category_id %>
-    <%= collection_select(:food, :category_id, Category.all, :id, :name) %>
+    <%= collection_select(:food, :category_id, Category.all, :id, :name, {include_blank: 'Select a category'}) %>
   </div>
 
   <div class="actions">
