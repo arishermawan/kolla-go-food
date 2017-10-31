@@ -15,6 +15,9 @@
     </div>
     <div id="columns">
       <div id="side">
+      <div id="cart">
+        <%= render @cart %>
+      </div>
         <ul>
           <li><%= link_to 'Home', store_index_path %></li>
           <li><a href="#">My Account</a></li>

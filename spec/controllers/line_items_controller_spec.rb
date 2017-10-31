@@ -1,5 +1,32 @@
 require 'rails_helper'
 
+
+describe CartController do
+  describe 'DELETE #destroy' do
+
+    before :each do
+      @cart = create(:cart)
+      session[:cart_id] = @cart.id 
+    end
+
+    it "should remove only user own cart" do
+      expect{
+        delete :destroy, params: { id: @cart }
+      }.to change(Cart, :count).by(-1)
+    end
+
+    it "should remove cart form user's session" do
+      delete :destroy, params: { id: cart.id }
+      expect(session).not_to include(@cart)
+    end
+
+    it "redirect to store index" do
+      delete :destroy, params: { id: @cart }
+      expect(response).to redirect_to carts_url
+    end
+  end
+end
+
 describe LineItemsController do
   describe 'POST #create' do
     before :each do
