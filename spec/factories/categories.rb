@@ -2,7 +2,10 @@
 
 FactoryGirl.define do
   factory :category do
-    name "Traditional Food"
+    # name "Traditional Food"
+    sequence :name do |n|
+      "category#{n}"
+    end
   end
 
   factory :invalid_category, parent: :category do

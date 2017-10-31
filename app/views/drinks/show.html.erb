@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @drink.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @drink.description %>
+</p>
+
+<p>
+  <strong>Image url:</strong>
+  <%= @drink.image_url %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @drink.price %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <% if(@drink.category_id != nil) %>
+    <%= @drink.category.name %>
+  <% end %>
+</p>
+
+<%= link_to 'Edit', edit_drink_path(@drink) %> |
+<%= link_to 'Back', drinks_path %>

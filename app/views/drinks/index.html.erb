@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Drinks</h1>
+
+<table>
+    <% @drinks.each do |drink| %>
+      <tr class="<%= cycle('list_line_odd','list_line_even')%>">
+        <td>
+          <%= image_tag(drink.image_url, class: 'list_image')%>
+        </td>
+        <td class="list_description">
+          <d1>
+            <dt><%= drink.name %></dt>
+            <dd><%= truncate(strip_tags(drink.description), length:80) %></dd>
+            <dd>Rp <%= drink.price %></dt>
+          </d1>
+        </td>
+
+        <td class="list_action">
+          <%= link_to 'Show', drink %>
+          <%= link_to 'Edit', edit_drink_path(drink) %>
+          <%= link_to 'Destroy', drink, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Drink', new_drink_path %>

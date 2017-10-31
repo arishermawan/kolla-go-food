@@ -1,5 +1,6 @@
 class Category < ApplicationRecord
   has_many :foods
+  has_many :drinks
   validates :name, uniqueness: true, presence: true
 
   before_destroy :ensure_not_referenced_by_any_food

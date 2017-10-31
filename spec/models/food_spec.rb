@@ -65,7 +65,6 @@ describe Food do
     end
   end
 
-
 describe "returns a sorted array of results that match" do
   before :each do
     @food1 = create(:food, name:"Nasi Rames")
