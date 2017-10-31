@@ -2,7 +2,7 @@ class CategoriesController < ApplicationController
   
   def show
     @category = Category.find(params[:id])
-    @foods= Category.by_category( params[:id] )
+    @foods= Food.where(category_id: params[:id] )
   end
 
   def index
@@ -17,11 +17,9 @@ class CategoriesController < ApplicationController
     @category = Category.find(params[:id])
   end
 
-
   def create
 
     @category = Category.new(food_params)
-
     respond_to do |format|
       if @category.save
         format.html { redirect_to @category, notice: 'Category was successfully created.' }
@@ -44,8 +42,7 @@ class CategoriesController < ApplicationController
 
   def destroy
     @category = Category.find(params[:id])
-    if Category.category_empty?(@category)
-      @category.destroy
+    if @category.destroy
       respond_to do |format|
         format.html { redirect_to categories_url, notice: 'Category was successfully destroyed.' }
       end
@@ -54,7 +51,6 @@ class CategoriesController < ApplicationController
         format.html { redirect_to categories_url, notice: 'Category was not empty.' }
       end
     end
-
   end
 
   private
