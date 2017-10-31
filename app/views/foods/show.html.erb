@@ -20,5 +20,12 @@
   <%= @food.price %>
 </p>
 
+<p>
+  <strong>Category:</strong>
+  <% if(@food.category_id != nil) %>
+    <%= @food.category.name %>
+  <% end %>
+</p>
+
 <%= link_to 'Edit', edit_food_path(@food) %> |
 <%= link_to 'Back', foods_path %>

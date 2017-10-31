@@ -3,6 +3,8 @@ FactoryGirl.define do
     name { Faker::Food.dish }
     description { Faker::Food.ingredient }
     price 10000.0
+
+    # association :category
   end
 
   factory :invalid_food, parent: :food do

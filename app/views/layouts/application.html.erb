@@ -16,10 +16,24 @@
     <div id="columns">
       <div id="side">
         <ul>
-          <li><a href="#">Home</a></li>
+          <li><%= link_to 'Home', store_index_path %></li>
           <li><a href="#">My Account</a></li>
           <li><a href="#">My Orders</a></li>
         </ul>
+
+        <br>
+        <br>
+        <div style="color: white;">
+          <h3><%= link_to 'Categories :', categories_path %></h3>
+          <ul>
+          <% @cat=Category.all %>
+          <% @cat.each do |category| %>
+          <% if category.foods.length != 0 %>
+            <li><%= link_to category.name, category %></li>
+            <% end %>
+          <% end %>
+          </ul>
+        </div>
       </div>
       <div id="main">
     <%= yield %>

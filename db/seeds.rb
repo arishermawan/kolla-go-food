@@ -64,5 +64,18 @@ Buyer.create!(
 )
 
 
+Category.delete_all
+
+Category.create!(
+  name: 'Traditonal'
+)
+
+Category.create!(
+  name: 'Fast Food'
+)
+
+Category.create!(
+  name: 'Soft Drik'
+)
 
 
