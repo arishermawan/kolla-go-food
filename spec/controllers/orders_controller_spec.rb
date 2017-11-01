@@ -2,6 +2,7 @@ require 'rails_helper'
 
 
 describe OrdersController do
+  
   it "includes CurrentCart" do
     expect(OrdersController.ancestors.include?CurrentCart).to eq(true)
   end
@@ -11,7 +12,7 @@ describe OrdersController do
       order1  = create(:order, name: "Buyer 1")
       order2  = create(:order, name: "Buyer 2")
       get :index
-      expect(assigns(:orders)).to match_arrary([order1, order2])
+      expect(assigns(:orders)).to match_array([order1, order2])
     end
 
     it "renders te :index tmplate" do  
@@ -27,7 +28,8 @@ describe OrdersController do
       expect(assigns(:order)).to eq order
     end
 
-    it "renders the :index tmplate" do  
+    it "renders the :show tmplate" do
+      order = create(:order)  
       get :show, params:{ id: order }
       expect(response).to render_template :show
     end     
@@ -38,7 +40,7 @@ describe OrdersController do
     context " with valid cart " do
       before :each do
         @cart = create(:cart)
-        session[:cart_id] = @cart_id
+        session[:cart_id] = @cart.id
         @line_item = create(:line_item, cart:@cart)
       end
 
@@ -56,12 +58,12 @@ describe OrdersController do
     context " with empty cart " do
       before :each do
         @cart = create(:cart)
-        session[:cart_id] = @cart_id
+        session[:cart_id] = @cart.id
       end
 
       it "redirect to store index" do
         get :new
-        expect(response).to redirect_to store_index_url
+        expect(:response).to redirect_to store_index_url
       end
     end
 
@@ -74,14 +76,15 @@ describe OrdersController do
       expect(assigns(:order)).to eq order
     end
 
-    it "renders the :edit tmplate" do  
-      get :show, params:{ id: order }
+    it "renders the :edit tmplate" do 
+      order = create(:order) 
+      get :edit, params:{ id: order }
       expect(response).to render_template :edit
     end     
   end
 
   describe 'GET #create' do
-    context "with valid attributes"
+    context "with valid attributes" do
       it "save the new order in the database" do
         expect{
         post :create, params:{ order: attributes_for(:order) }
@@ -100,20 +103,20 @@ describe OrdersController do
       end
 
       it "redirect to store index" do
-        post :create, params:{ order: attributes_for(:order)
+        post :create, params:{ order: attributes_for(:order) }
         expect(response).to redirect_to store_index_url
       end
     end
 
-    context "with invalid attributes"
+    context "with invalid attributes" do
       it "does not save the new order in the database " do  
         expect{
           post :create, params:{ order: attributes_for(:invalid_order) }
         }.not_to change(Order, :count)
       end
 
-      it "rerenders the :new template" do
-        post :create, params:{ order: attributes_for(:invalid_order)
+      it "re-renders the :new template" do
+        post :create, params:{ order: attributes_for(:invalid_order) }
         expect(response).to render_template :new
       end
     end
@@ -125,7 +128,7 @@ describe OrdersController do
       @order = create(:order)
     end
 
-    context "with valid attributes"
+    context "with valid attributes" do
       it "locates the requested @order" do
         patch :update, params:{ id: @order, order: attributes_for(:order) }
         expect(assigns(:order)).to eq @order
@@ -133,7 +136,7 @@ describe OrdersController do
 
       it "changes @order's attributes " do  
         patch :update, params:{ id: @order, order: attributes_for(:order, name:"nasi uduk") }
-        order.reload
+        @order.reload
         expect(@order.name).to eq('nasi uduk')
       end
 
@@ -143,10 +146,10 @@ describe OrdersController do
       end
     end
 
-    context "with invalid attributes"
+    context "with invalid attributes" do
       it "does not update the order in the database " do  
         patch :update, params:{ id: @order, order: attributes_for(:order, name:"nasi uduk", address: nil) }
-        order.reload
+        @order.reload
         expect(@order.name).not_to eq('nasi uduk')
       end
 
@@ -169,8 +172,9 @@ describe OrdersController do
     end
 
     it "redirect to order#index" do  
-      delete :destroy, params:{ id: order }
+      delete :destroy, params:{ id: @order }
       expect(response).to redirect_to orders_url
     end     
   end
+
 end
