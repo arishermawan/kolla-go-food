@@ -40,9 +40,13 @@ describe Order do
   end
 
   it "is invalid without a payment type" do
-    order = build(:order, paymet_type: nil)
+    order = build(:order, payment_type: nil)
     order.valid?
-    expect(order.errors[:name]).to include("can't be blank")
+    expect(order.errors[:payment_type]).to include("can't be blank")
+  end
+
+  it "invalid with wrong payment_type" do
+    expect{ build(:order, payment_type: "Grab Pay")}. to raise_error(ArgumentError)
   end
 
 end
