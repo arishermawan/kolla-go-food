@@ -47,7 +47,7 @@ class FoodsController < ApplicationController
       if @food.update(food_params)
         format.html { redirect_to @food, notice: 'Food was successfully updated.' }
         format.json { render :show, status: :ok, location: @food }
-        @foods = Food.all
+        @foods = Food.order(:name)
         ActionCable.server.broadcast 'foods', html: render_to_string('store/index', layout: false)
       else
         format.html { render :edit }
