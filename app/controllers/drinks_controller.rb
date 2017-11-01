@@ -12,8 +12,12 @@ class DrinksController < ApplicationController
     @drink = Drink.find(params[:id])
   end
 
+  def new
+    @drink = Drink.new
+  end
+
   def create
-    @drink = Drink.new(drink)
+    @drink = Drink.new(drink_params)
     respond_to do |format|
       if @drink.save
         format.html { redirect_to @drink, notice: 'Drink was successfully created.' }
@@ -39,6 +43,12 @@ class DrinksController < ApplicationController
   end
 
   def destroy
+    @drink = Drink.find(params[:id])
+    @drink.destroy
+    respond_to do |format|
+      format.html{ redirect_to drinks_path, notice:"Drink was successfully deleted" }
+      format.json{ head :no_content  }
+    end
   end
 
 
