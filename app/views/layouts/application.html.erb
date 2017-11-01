@@ -16,7 +16,11 @@
     <div id="columns">
       <div id="side">
       <div id="cart">
-        <%= render @cart %>
+        <% if @cart %>
+          <%= hidden_div_if(@cart.line_items.empty?, id: 'cart') do %>
+            <%= render @cart %>
+          <% end %>
+        <% end %>
       </div>
         <ul>
           <li><%= link_to 'Home', store_index_path %></li>
