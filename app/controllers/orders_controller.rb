@@ -1,10 +1,10 @@
 class OrdersController < ApplicationController
   include CurrentCart
-  
+
   before_action :set_cart, only: [:new, :create]
   before_action :cart_not_empty, only: [:new]
   before_action :set_order, only: [:edit, :update, :destroy, :show]
-  
+
   def index
     @orders = Order.all
   end
@@ -20,10 +20,11 @@ class OrdersController < ApplicationController
   end
 
   def create
-
     @order = Order.new(order_params)
+    @order.add_line_items(@cart)
     respond_to do |format|
-      if @order.save   
+      if @order.save
+        Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
         format.html{redirect_to store_index_path, notice: "orders succesfully saved"}
       else

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 
 describe OrdersController do
-  
+
   it "includes CurrentCart" do
     expect(OrdersController.ancestors.include?CurrentCart).to eq(true)
   end
@@ -15,10 +15,10 @@ describe OrdersController do
       expect(assigns(:orders)).to match_array([order1, order2])
     end
 
-    it "renders te :index tmplate" do  
+    it "renders te :index tmplate" do
       get :index
       expect(response).to render_template :index
-    end   
+    end
   end
 
   describe 'GET #show' do
@@ -29,14 +29,14 @@ describe OrdersController do
     end
 
     it "renders the :show tmplate" do
-      order = create(:order)  
+      order = create(:order)
       get :show, params:{ id: order }
       expect(response).to render_template :show
-    end     
+    end
   end
 
   describe 'GET #new' do
-    
+
     context " with valid cart " do
       before :each do
         @cart = create(:cart)
@@ -76,28 +76,32 @@ describe OrdersController do
       expect(assigns(:order)).to eq order
     end
 
-    it "renders the :edit tmplate" do 
-      order = create(:order) 
+    it "renders the :edit tmplate" do
+      order = create(:order)
       get :edit, params:{ id: order }
       expect(response).to render_template :edit
-    end     
+    end
   end
 
   describe 'GET #create' do
     context "with valid attributes" do
+      before :each do
+        @cart = create(:cart)
+        session[:cart_id] = @cart.id
+      end
       it "save the new order in the database" do
         expect{
         post :create, params:{ order: attributes_for(:order) }
         }.to change(Order, :count).by(1)
       end
 
-      it "destroy session's cart " do  
+      it "destroy session's cart " do
         expect{
         post :create, params:{ order: attributes_for(:order) }
         }.to change(Cart, :count).by(-1)
       end
 
-      it "removes th cart from session's params " do  
+      it "removes th cart from session's params " do
         post :create, params:{ order: attributes_for(:order) }
         expect(session[:cart_id]).to eq(nil)
       end
@@ -109,7 +113,7 @@ describe OrdersController do
     end
 
     context "with invalid attributes" do
-      it "does not save the new order in the database " do  
+      it "does not save the new order in the database " do
         expect{
           post :create, params:{ order: attributes_for(:invalid_order) }
         }.not_to change(Order, :count)
@@ -123,7 +127,7 @@ describe OrdersController do
   end
 
   describe 'GET #update' do
-    
+
     before :each do
       @order = create(:order)
     end
@@ -134,7 +138,7 @@ describe OrdersController do
         expect(assigns(:order)).to eq @order
       end
 
-      it "changes @order's attributes " do  
+      it "changes @order's attributes " do
         patch :update, params:{ id: @order, order: attributes_for(:order, name:"nasi uduk") }
         @order.reload
         expect(@order.name).to eq('nasi uduk')
@@ -147,7 +151,7 @@ describe OrdersController do
     end
 
     context "with invalid attributes" do
-      it "does not update the order in the database " do  
+      it "does not update the order in the database " do
         patch :update, params:{ id: @order, order: attributes_for(:order, name:"nasi uduk", address: nil) }
         @order.reload
         expect(@order.name).not_to eq('nasi uduk')
@@ -171,10 +175,10 @@ describe OrdersController do
       }.to change(Order, :count).by(-1)
     end
 
-    it "redirect to order#index" do  
+    it "redirect to order#index" do
       delete :destroy, params:{ id: @order }
       expect(response).to redirect_to orders_url
-    end     
+    end
   end
 
 end
