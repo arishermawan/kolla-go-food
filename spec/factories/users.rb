@@ -10,6 +10,5 @@ FactoryGirl.define do
     username nil
     password nil
     password_confirmation nil
-
   end
 end

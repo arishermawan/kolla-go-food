@@ -12,7 +12,8 @@ describe FoodsController do
   #     end
 
   #     it "redirect to users#index" do
-  #       post: create, params: { user}
+  #       post: create, params: { user: attribute_for(:user) }
+  #       expect(response).to redirect_to 
   #     end
   #   end
   # end
