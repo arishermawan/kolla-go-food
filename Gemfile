@@ -28,7 +28,7 @@ gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 gem 'jquery-ui-rails'
 gem 'jquery-rails'
@@ -51,7 +51,7 @@ group :test do
   gem 'faker', git: 'https://github.com/stympy/faker.git'
   # gem 'capybara',"-> 2.4.3"
   gem 'database_cleaner',"~> 1.3.0"
-  gem 'launchy',"~> 2.4.2"  
+  gem 'launchy',"~> 2.4.2"
   # gem 'selenium-webdriver',"-> 2.43.0"
 end
 
