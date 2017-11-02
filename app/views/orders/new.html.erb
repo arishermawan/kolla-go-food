@@ -1,5 +1,7 @@
-<h1>New Order</h1>
+<div class="go_good_form">
+  <fieldset>
+    <legend>Please Enter Your Details</legend>
+    <%= render 'form', order: @order %>
+  </fieldset>
 
-<%= render 'form', order: @order %>
-
-<%= link_to 'Back', orders_path %>
+</div>
