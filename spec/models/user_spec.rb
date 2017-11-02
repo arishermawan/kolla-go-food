@@ -40,7 +40,7 @@ describe User do
     it "is invalid with a confirmation mismatch" do
       user = build(:user, password: "shortpassword", password_confirmation: "longpassword")
       user.valid?
-      expect(user.errors[:password_confirmation]).to include("doesn't match Password)")
+      expect(user.errors[:password_confirmation]).to include("doesn't match Password")
     end
 
   end
@@ -55,16 +55,16 @@ describe User do
     end
 
     it "is invalid with an empty password" do
-      @user.password = ""
-      @user.password_confirmation = ""
-      @user.valid?
-      expect(@user.errors[:password]).to include("can't be blank)")
-    end
-
-    it "is invalid with an empty" do
       @user.password_digest = ""
       @user.valid?
-      expect(@user.errors[:password_digest]).to include("can't be blank)")
+      expect(@user.errors[:password]).to include("can't be blank")
+    end
+
+    it "is valid with a new (valid) password" do
+      @user.password = "newlongpassword"
+      @user.password_confirmation = "newlongpassword"
+      @user.valid?
+      expect(@user.valid?).to eq(true)
     end
   end
 end

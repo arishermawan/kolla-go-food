@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to admin_url
     else
-      redirect_to login_url, alert:"invalid user/passowrd combination"
+      redirect_to login_url, alert: "invalid user/passowrd combination"
     end
   end
 
@@ -17,5 +17,5 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     redirect_to store_index_url, notice: "Logged out"
   end
-  
+
 end

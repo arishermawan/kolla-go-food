@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'admin' => 'admin#index'
+
   root 'store#index', as: 'store_index'
 
   resources :line_items
