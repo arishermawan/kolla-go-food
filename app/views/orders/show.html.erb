@@ -21,4 +21,31 @@
   <%= @order.payment_type %>
 </p>
 
+<p><strong>Order Detail:</strong></p>
 
+<table>
+<tr align="center">
+  <td>No</td>
+  <td>Nama</td>
+  <td>Qty</td>
+  <td>Harga</td>
+  <td>Subtotal</td>
+</tr>
+<% i=1 %>
+<% @order.line_items.each do |line|  %>
+  <tr class="<%= cycle('list_line_odd','list_line_even')%>">
+    <td><%= i %></td>
+    <td><%= line.food.name %></td>
+    <td><%= line.quantity %></td>
+    <td align="right"><%= number_to_currency(line.food.price, unit: "Rp ", delimiter: ".", separator: ",")  %> </td>
+    <td align="right"><%= number_to_currency(line.total_price, unit: "Rp ", delimiter: ".", separator: ",") %></td>
+  </tr>
+  <% i+=1 %>
+<% end %>
+<tr>
+  <td colspan="4" align="center"><strong>TOTAL</strong></td>
+  <td align="right" colspan="4"><%= number_to_currency(@order.total_price, unit: "Rp ", delimiter: ".", separator: ",") %></td>
+</tr>
+</table>
+
+<%= link_to 'Back', orders_path %>
