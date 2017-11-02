@@ -70,7 +70,6 @@ describe UsersController do
       end
     end
 
-
     context "with invalid attributes" do
       it "does not save the new user in the database" do
         expect{
@@ -83,7 +82,6 @@ describe UsersController do
         expect(response).to render_template :new
       end
     end
-
   end
 
 
@@ -148,5 +146,4 @@ describe UsersController do
       expect(response).to redirect_to users_path
     end
   end
-
 end

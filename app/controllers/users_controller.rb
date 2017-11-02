@@ -37,8 +37,8 @@ class UsersController < ApplicationController
         format.html { redirect_to users_url, notice: 'user was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
 
-        @users = User.all
-        ActionCable.server.broadcast 'users', html: render_to_string('store/index', layout: false)
+        # @users = User.all
+        # ActionCable.server.broadcast 'users', html: render_to_string('store/index', layout: false)
       else
         format.html { render :edit }
         format.json { render json: @user.errors, status: :unprocessable_entity }
