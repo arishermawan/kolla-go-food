@@ -27,7 +27,8 @@ class OrdersController < ApplicationController
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
 
-        OrderMailer.received(@order).deliver!
+        OrderMailer.received(@order).deliver_later # Active Jobs Asyncronus
+        OrderMailer.received(@order).deliver # Syncronus
 
         format.html{redirect_to store_index_path, notice: "orders succesfully saved"}
       else
