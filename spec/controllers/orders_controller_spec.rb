@@ -2,12 +2,17 @@ require 'rails_helper'
 
 
 describe OrdersController do
+  before :each do
+    user = create(:user)
+    session[:user_id] = user.id
+  end
 
   it "includes CurrentCart" do
     expect(OrdersController.ancestors.include?CurrentCart).to eq(true)
   end
 
   describe 'GET #index' do
+
     it "populates an array of all orders" do
       order1  = create(:order, name: "Buyer 1")
       order2  = create(:order, name: "Buyer 2")
@@ -83,7 +88,7 @@ describe OrdersController do
     end
   end
 
-  describe 'GET #create' do
+  describe 'POST #create' do
     context "with valid attributes" do
       before :each do
         @cart = create(:cart)
@@ -109,6 +114,12 @@ describe OrdersController do
       it "redirect to store index" do
         post :create, params:{ order: attributes_for(:order) }
         expect(response).to redirect_to store_index_url
+      end
+
+      it "sends order confirmation email" do
+        expect{
+          post :create, params:{order: attributes_for(:order)}
+        }.to change{ActionMailer::Base.deliveries.count}.by(1)
       end
     end
 

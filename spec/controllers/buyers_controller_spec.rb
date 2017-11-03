@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 describe BuyersController do
+  before :each do
+    user = create(:user)
+    session[:user_id] = user.id
+  end
   describe 'GET #index' do
     context 'with params[:letter]' do
       it "populates an array of buyers starting with the letter" do
@@ -12,12 +16,12 @@ describe BuyersController do
 
       it "render the :index template" do
         get :index, params:{ letter: 'N' }
-        expect(response).to render_template :index    
+        expect(response).to render_template :index
       end
     end
 
     context 'without params[:letter]' do
-     it "populates an array of all buyers" do 
+     it "populates an array of all buyers" do
         aris = create(:buyer, name:"Aris")
         budi = create(:buyer, name:"Budi")
         get :index
@@ -42,7 +46,7 @@ describe BuyersController do
       buyer = create(:buyer)
       get :show, params:{id: buyer}
       expect(response).to render_template :show
-    end   
+    end
   end
 
   describe 'GET #new' do
@@ -50,7 +54,7 @@ describe BuyersController do
       get :new
       expect(assigns(:buyer)).to be_a_new(Buyer)
     end
-    
+
     it "render the :new template" do
       get :new
       expect(response).to render_template :new
@@ -68,7 +72,7 @@ describe BuyersController do
       buyer = create(:buyer)
       get :edit, params:{id: buyer}
       expect(response).to render_template :edit
-    end   
+    end
   end
 
   describe 'POST #create' do
@@ -137,13 +141,13 @@ describe BuyersController do
 
   describe 'DELETE #destroy' do
     before :each do
-      @buyer = create(:buyer) 
+      @buyer = create(:buyer)
     end
 
     it "delete the buyer from the database" do
       expect{
         delete :destroy, params: { id: @buyer }
-      }.to change(Buyer, :count).by(-1) 
+      }.to change(Buyer, :count).by(-1)
 
     end
 

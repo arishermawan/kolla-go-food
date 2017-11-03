@@ -2,6 +2,11 @@ require 'rails_helper'
 
 describe UsersController do
 
+  before :each do
+    userq = create(:user)
+    session[:user_id] = userq.id
+  end
+
   describe 'GET#index' do
     it "populates an array of all users" do
       user1 = create(:user, username: "user1")

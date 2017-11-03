@@ -27,7 +27,19 @@ Rails.application.configure do
   end
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: "smtp.gmail.com",
+    port: 587,
+    authentication: "plain",
+    user_name: "go.scholarship.kolla",
+    password: "Kolaboras1",
+    enable_starttls_auto:true
+  }
+
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.peform_deliveries = true
 
   config.action_mailer.perform_caching = false
 

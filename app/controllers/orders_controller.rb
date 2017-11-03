@@ -26,6 +26,9 @@ class OrdersController < ApplicationController
       if @order.save
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
+
+        OrderMailer.received(@order).deliver!
+
         format.html{redirect_to store_index_path, notice: "orders succesfully saved"}
       else
         format.html{render :new}

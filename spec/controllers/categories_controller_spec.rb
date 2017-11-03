@@ -1,9 +1,13 @@
 require 'rails_helper'
 
 describe CategoriesController do
+  before :each do
+    user = create(:user)
+    session[:user_id] = user.id
+  end
   describe 'GET #index' do
 
-   it "populates an array of all categories" do 
+   it "populates an array of all categories" do
       cat1 = create(:category, name: "Food")
       cat2 = create(:category, name: "Drink")
       get :index
@@ -35,7 +39,7 @@ describe CategoriesController do
       category = create(:category)
       get :show, params:{id: category}
       expect(response).to render_template :show
-    end   
+    end
   end
 
   describe 'GET #new' do
@@ -43,7 +47,7 @@ describe CategoriesController do
       get :new
       expect(assigns(:category)).to be_a_new(Category)
     end
-    
+
     it "render the :new template" do
       get :new
       expect(response).to render_template :new
@@ -61,7 +65,7 @@ describe CategoriesController do
       category = create(:category)
       get :edit, params:{id: category}
       expect(response).to render_template :edit
-    end   
+    end
   end
 
   describe 'POST #create' do
@@ -131,7 +135,7 @@ describe CategoriesController do
   describe 'DELETE #destroy' do
     before :each do
       @category = create(:category, name:"Traditional", id:1)
- 
+
     end
 
     context 'with empty food associaton in database' do
@@ -149,10 +153,10 @@ describe CategoriesController do
 
     context 'with not empty food associaton in database' do
       it "dont delete the category from the database" do
-        @food = create(:food, category: @category) 
+        @food = create(:food, category: @category)
         expect{
           delete :destroy, params: { id: @category }
-        }.not_to change(Category, :count) 
+        }.not_to change(Category, :count)
       end
 
       it "redirects to the category#index" do

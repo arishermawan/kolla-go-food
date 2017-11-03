@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 describe FoodsController do
+  before :each do
+    user = create(:user)
+    session[:user_id] = user.id
+  end
+  
   describe 'GET #index' do
     context 'with params[:letter]' do
       it "populates an array of foods starting with the letter" do
@@ -12,12 +17,12 @@ describe FoodsController do
 
       it "render the :index template" do
         get :index, params:{ letter: 'N' }
-        expect(response).to render_template :index    
+        expect(response).to render_template :index
       end
     end
 
     context 'without params[:letter]' do
-     it "populates an array of all foods" do 
+     it "populates an array of all foods" do
         nasi_uduk = create(:food, name: "Nasi Uduk")
         kerak_telor = create(:food, name: "Kelar Telor")
         get :index
@@ -42,7 +47,7 @@ describe FoodsController do
       food = create(:food)
       get :show, params:{id: food}
       expect(response).to render_template :show
-    end   
+    end
   end
 
   describe 'GET #new' do
@@ -50,7 +55,7 @@ describe FoodsController do
       get :new
       expect(assigns(:food)).to be_a_new(Food)
     end
-    
+
     it "render the :new template" do
       get :new
       expect(response).to render_template :new
@@ -68,7 +73,7 @@ describe FoodsController do
       food = create(:food)
       get :edit, params:{id: food}
       expect(response).to render_template :edit
-    end   
+    end
   end
 
   describe 'POST #create' do
@@ -137,13 +142,13 @@ describe FoodsController do
 
   describe 'DELETE #destroy' do
     before :each do
-      @food = create(:food) 
+      @food = create(:food)
     end
 
     it "delete the food from the database" do
       expect{
         delete :destroy, params: { id: @food }
-      }.to change(Food, :count).by(-1) 
+      }.to change(Food, :count).by(-1)
 
     end
 
