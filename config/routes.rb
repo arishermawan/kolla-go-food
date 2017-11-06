@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :buyers
   resources :foods
   resources :carts
+  resources :vouchers
 
   get 'store/index'
   get 'home/hello'
