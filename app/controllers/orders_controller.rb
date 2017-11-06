@@ -22,6 +22,7 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params)
     @order.add_line_items(@cart)
+    @order.voucher_id = Voucher.find_by(code: @order.voucher_code).id
     respond_to do |format|
       if @order.save
         Cart.destroy(session[:cart_id])
@@ -56,9 +57,6 @@ class OrdersController < ApplicationController
   end
 
 
-
-
-
   private
 
   def cart_not_empty
@@ -72,7 +70,7 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    params.require(:order).permit(:name, :email, :address, :payment_type)
+    params.require(:order).permit(:name, :email, :address, :payment_type, :voucher_code)
   end
 
 end

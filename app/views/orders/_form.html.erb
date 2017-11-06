@@ -12,7 +12,7 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
+    <%= form.label :name, size:30 %>
     <%= form.text_field :name, size:40 %>
   </div>
 
@@ -28,8 +28,14 @@
 
   <div class="field">
     <%= form.label :payment_type %>
-    <%= form.select :payment_type, Order.payment_types.keys, prompt:"Select a payment type" %>
+    <%= form.select :payment_type, Order.payment_types.keys, prompt:"Select a payment type", size:40 %>
   </div>
+
+  <div class="field">
+    <%= form.label :voucher_code %>
+    <%= form.text_field :voucher_code, size:40 %>
+  </div>
+
 
   <div class="actions">
     <%= form.submit "Place Order" %>

@@ -20,7 +20,6 @@ class VouchersController < ApplicationController
     @voucher = Voucher.new(voucher_params)
 
     respond_to do |format|
-      @voucher.code.upcase!
       if @voucher.save
         format.html { redirect_to @voucher, notice: 'Voucher was successfully created.' }
         format.json { render :show, status: :created, location: @voucher }
@@ -33,7 +32,6 @@ class VouchersController < ApplicationController
 
   def update
     respond_to do |format|
-      @voucher.code.upcase!
       if @voucher.update(voucher_params)
         format.html { redirect_to @voucher, notice: 'Voucher was successfully updated.' }
         format.json { render :show, status: :ok, location: @voucher }
