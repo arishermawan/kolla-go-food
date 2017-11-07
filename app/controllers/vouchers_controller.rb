@@ -1,5 +1,4 @@
 class VouchersController < ApplicationController
-  skip_before_action :authorize
   before_action :set_voucher, only: [:show, :edit, :update, :destroy]
 
   def index

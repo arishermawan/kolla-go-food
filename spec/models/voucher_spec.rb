@@ -3,9 +3,11 @@ require 'rails_helper'
 describe Voucher do
 
   it "has a valid factory" do
+    expect(build(:voucher)).to be_valid
   end
 
   it "is valid with a code, valid_from, valid_through, amount, unit_type, max_amount" do
+    expect(build(:voucher)).to be_valid
   end
 
   it "is invalid without a code" do
@@ -30,6 +32,10 @@ describe Voucher do
     voucher = build(:voucher, unit_type: nil)
     voucher.valid?
     expect(voucher.errors[:unit_type]).to include("can't be blank")
+  end
+
+  it "invalid with wrong unit_type" do
+    expect{ build(:voucher, unit_type: "dollar")}. to raise_error(ArgumentError)
   end
 
   it "is invalid with a duplicate code" do
@@ -89,5 +95,50 @@ describe Voucher do
         expect(@voucher2.errors[:max_amount]).to include("is not a number")
       end
     end
+  end
+
+  it 'is code saved with upcase format' do
+    voucher = create(:voucher, code: 'downcase')
+    expect(voucher.code).to eq('DOWNCASE')
+  end
+
+  it 'with a invalid format date valid_from' do
+    voucher = build(:voucher, valid_from: 'badformat')
+    voucher.valid?
+    expect(voucher.errors[:valid_from]).to include("is invalid Date")
+  end
+
+  it 'with a invalid format date valid_through' do
+    voucher = build(:voucher, valid_through: 'badformat')
+    voucher.valid?
+    expect(voucher.errors[:valid_through]).to include("is invalid Date")
+  end
+
+  it 'invalid if valid_through < valid_from' do
+    voucher = build(:voucher, valid_through: '2017-11-6', valid_from: '2017-11-7')
+    voucher.valid?
+    expect(voucher.errors[:valid_through]).to include("must be greater than or equal to valid_from")
+  end
+
+  context "with unit value is rupiah" do
+    it "invalid with max_amount less than amount" do
+      voucher = build(:voucher, unit_type:0, amount:9000, max_amount: 8000)
+      voucher.valid?
+      expect(voucher.errors[:max_amount]).to include("must be greater or equal to amount")
+    end
+  end
+
+  it "is invalid with case insensetive duplicate cod" do
+    voucher1 = create(:voucher, code: "gojekinaja")
+    voucher2 = build(:voucher, code: "GOJEKINAJA")
+    voucher2.valid?
+    expect(voucher2.errors[:code]).to include("has already been taken")
+  end
+
+  it "cant be destroy while it hash order" do
+    voucher = create(:voucher)
+    order = create(:order, voucher: voucher)
+    voucher.orders << order
+    expect{voucher.destroy}.not_to change(Voucher, :count)
   end
 end

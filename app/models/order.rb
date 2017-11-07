@@ -13,6 +13,7 @@ class Order < ApplicationRecord
   validates :name, :address, :email, :payment_type, presence: true
   validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
   validates :payment_type, inclusion: payment_types.keys
+  validates_with VoucherValidator
 
   def add_line_items(cart)
     cart.line_items.each do |item|
@@ -50,6 +51,4 @@ class Order < ApplicationRecord
   def total_price
     (sub_total - discount) < 0 ? 0 : sub_total - discount
   end
-
-
 end

@@ -47,7 +47,7 @@
   <td align="right" colspan="4"><%= number_to_currency(@order.sub_total, unit: "Rp ", delimiter: ".", separator: ",") %></td>
 </tr>
 <tr>
-  <td colspan="4" align="center"><strong>DISCOUNT</strong></td>
+  <td colspan="4" align="center"><strong>DISCOUNT</strong><% if @order.voucher_id != nil %>(<%= @order.voucher.code %>)<% end %></td>
   <td align="right" colspan="4"><%= number_to_currency(@order.discount, unit: "Rp ", delimiter: ".", separator: ",") %></td>
 </tr>
 <tr>

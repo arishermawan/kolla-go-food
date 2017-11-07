@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 describe VouchersController do
-  # before :each do
-  #   user = create(:user)
-  #   session[:user_id] = user.id
-  # end
+  before :each do
+    user = create(:user)
+    session[:user_id] = user.id
+  end
 
   describe 'GET #index' do
     it "populates an array of all vouchers" do
@@ -31,6 +31,7 @@ describe VouchersController do
       voucher = create(:voucher)
       get :show, params:{id: voucher}
       expect(response).to render_template :show
+
     end
   end
 
@@ -70,7 +71,7 @@ describe VouchersController do
 
       it "redirects to voucher#show" do
         post :create, params: { voucher: attributes_for(:voucher) }
-        expect(response).to redirect_to(food_path(assigns[:voucher]))
+        expect(response).to redirect_to(voucher_path(assigns[:voucher]))
       end
     end
 
@@ -102,7 +103,7 @@ describe VouchersController do
       it "changes @voucher's attributes" do
         patch :update, params: {id: @voucher, voucher: attributes_for(:voucher, code: 'GOPAYAJA') }
         @voucher.reload
-        expect(@voucher.name).to eq('GOPAYAJA')
+        expect(@voucher.code).to eq('GOPAYAJA')
       end
 
       it "redirects to the voucher" do
@@ -113,12 +114,12 @@ describe VouchersController do
 
     context 'with invalid attributes' do
       it "does not update the voucher in the database" do
-        patch :update, params: { id: @voucher, voucher: attributes_for(:voucher, name: 'Nasi Uduk', description: nil) }
+        patch :update, params: { id: @voucher, voucher: attributes_for(:voucher, code: 'GOPAYAJA', valid_from: nil) }
         @voucher.reload
-        expect(@voucher.name).not_to eq('Nasi Uduk')
+        expect(@voucher.code).not_to eq('GOPAYAJA')
       end
       it "re-render the :edit template" do
-        patch :update, params: {id:@voucher, voucher: attributes_for(:invalid_food) }
+        patch :update, params: {id:@voucher, voucher: attributes_for(:invalid_voucher) }
         expect(response).to render_template :edit
       end
     end
@@ -132,13 +133,13 @@ describe VouchersController do
     it "delete the voucher from the database" do
       expect{
         delete :destroy, params: { id: @voucher }
-      }.to change(voucher, :count).by(-1)
+      }.to change(Voucher, :count).by(-1)
 
     end
 
     it "redirects to the voucher#index" do
       delete :destroy, params: { id: @voucher }
-      expect(response).to redirect_to foods_url
+      expect(response).to redirect_to vouchers_url
     end
   end
 end
