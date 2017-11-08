@@ -2,7 +2,12 @@
 
 FactoryGirl.define do
   factory :restaurant do
-    name "MyString"
-    address "MyText"
+    name "Restaurant890"
+    address "Ini Restaurant"
+  end
+
+  factory :invalid_restaurant, parent: :restaurant do
+    name nil
+    address nil
   end
 end

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :carts
   resources :vouchers
   resources :tags
+  resources :restaurants
 
   get 'store/index'
   get 'home/hello'

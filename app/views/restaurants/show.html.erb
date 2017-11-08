@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
-<h1>Your Food Catalog</h1>
-
+<h1><%= @restaurant.name %></h1>
+<p><%= @restaurant.address %></p>
 
 <% @foods.each do |food| %>
   <div class="entry">

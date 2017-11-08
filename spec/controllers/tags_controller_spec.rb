@@ -32,6 +32,7 @@ describe TagsController do
     end
 
     it "renders the :show template" do
+      tag = create(:tag)
       get :show, params:{id: tag}
       expect(response).to render_template :show
     end
@@ -70,12 +71,12 @@ describe TagsController do
     context "with invalid attributes" do
       it "doesn't save new tag in the database" do
         expect{
-            post :create, params:{ tag: attributes_for(:tag) }
+            post :create, params:{ tag: attributes_for(:invalid_tag) }
           }.not_to change(Tag, :count)
       end
 
       it "re-render the :new template" do
-        post :create, params:{ tag: attributes_for(:tag) }
+        post :create, params:{ tag: attributes_for(:invalid_tag) }
         expect(response).to render_template :new
       end
     end
@@ -115,7 +116,7 @@ describe TagsController do
 
       it "redirect to tag#show" do
         patch :update, params:{id: @tag, tag: attributes_for(:tag, name:"junkfood")}
-        expect(response).to render_template :show
+        expect(response).to redirect_to tag_path(@tag)
       end
     end
 
@@ -133,36 +134,36 @@ describe TagsController do
     end
   end
 
-  # describe 'DELETE #destroy' do
-  #   before :each do
-  #     @tag = create(:tag)
-  #   end
-  #   context "doesn't have association with food" do
-  #     it "delete the tag from database" do
-  #       expect{
-  #         delete :destroy, params:{id: @tag}
-  #       }.to change(Tag, :count).by(-1)
-  #     end
+  describe 'DELETE #destroy' do
+    before :each do
+      @tag = create(:tag)
+    end
+    context "doesn't have association with food" do
+      it "delete the tag from database" do
+        expect{
+          delete :destroy, params:{id: @tag}
+        }.to change(Tag, :count).by(-1)
+      end
 
-  #     it "redirect to the tag#index" do
-  #       delete :destroy, params:{id: @tag}
-  #       expect(response).to redirect_to tags_path
-  #     end
-  #   end
+      it "redirect to the tag#index" do
+        delete :destroy, params:{id: @tag}
+        expect(response).to redirect_to tags_path
+      end
+    end
 
-  #   context "have association with food" do
-  #     food = create(:food, tag: @tag)
-  #     it "dont delete the tag from database" do
-  #       expect{
-  #         delete :destroy, params:{id: @tag}
-  #       }.not_to change(Tag, :count)
-  #     end
+    # context "have association with food" do
+    #   it "dont delete the tag from database" do
+    #     food = create(:food, tag_: @tag)
+    #     expect{
+    #       delete :destroy, params:{id: @tag}
+    #     }.not_to change(Tag, :count)
+    #   end
 
-  #     it "redirect to the tag#index" do
-  #       delete :destroy, params:{id: @tag}
-  #       expect(response).to redirect_to tags_path
-  #     end
-  #   end
-  # end
+    #   it "redirect to the tag#index" do
+    #     delete :destroy, params:{id: @tag}
+    #     expect(response).to redirect_to tags_path
+    #   end
+    # end
+  end
 
 end
