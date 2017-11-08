@@ -36,7 +36,17 @@
     <%= collection_select(:food, :category_id, Category.all, :id, :name, {include_blank: 'Select a category'}) %>
   </div>
 
-  <div class="actions">
+  <div class="field">
+    <%= form.collection_check_boxes :tag_ids, Tag.all, :id, :name do |b| %>
+    <div class="box">
+      <%= b.check_box %>
+      <%= b.label %>
+    </div>
+  <% end %>
+
+  </div>
+
+  <div class="actions after-box">
     <%= form.submit %>
   </div>
 <% end %>

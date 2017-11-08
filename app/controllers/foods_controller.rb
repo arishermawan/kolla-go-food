@@ -1,6 +1,6 @@
 class FoodsController < ApplicationController
   before_action :set_food, only: [:show, :edit, :update, :destroy]
-  skip_before_action :authorize   
+  skip_before_action :authorize
   # GET /foods
   # GET /foods.json
   def index
@@ -74,6 +74,6 @@ class FoodsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def food_params
-      params.require(:food).permit(:name, :description, :image_url, :price, :category_id)
+      params.require(:food).permit(:name, :description, :image_url, :price, :category_id, tag_ids:[])
     end
 end

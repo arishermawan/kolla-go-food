@@ -5,6 +5,7 @@ FactoryGirl.define do
     price 10000.0
 
     # association :category
+    association :restaurant
   end
 
   factory :invalid_food, parent: :food do
