@@ -2,6 +2,33 @@
 <h1><%= @restaurant.name %></h1>
 <p><%= @restaurant.address %></p>
 
+<h3>Costumers Reviews</h3>
+
+<% if @reviews != nil %>
+  <table>
+    <tr>
+      <td>Name</td>
+      <td>Review</td>
+
+    </tr>
+  <% @reviews.each do |r| %>
+    <tr>
+      <td><%= r.name %></td>
+      <td> <strong><%= r.title %></strong><br>
+          <%= r.description %>
+      </td>
+    </tr>
+
+  <% end %>
+  </table>
+<% else %>
+
+  No Reviews
+
+<% end %>
+
+
+<h3>list food :</h3>
 <% @foods.each do |food| %>
   <div class="entry">
     <%= image_tag(food.image_url) %>

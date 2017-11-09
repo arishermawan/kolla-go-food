@@ -1,0 +1,40 @@
+<h2>
+<%= @reviewable_type %> :
+<%= @reviewable_type.constantize.find(@reviewable_id).name %>
+</h2>
+
+<%= form_with(model: review, local: true) do |form| %>
+  <% if review.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(review.errors.count, "error") %> prohibited this review from being saved:</h2>
+
+      <ul>
+      <% review.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :review_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title, id: :review_title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description, id: :review_description %>
+  </div>
+
+  <%= form.hidden_field(:reviewable_type, :value => @reviewable_type) %>
+  <%= form.hidden_field(:reviewable_id, :value => @reviewable_id) %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

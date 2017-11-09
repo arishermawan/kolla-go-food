@@ -9,11 +9,18 @@ Rails.application.routes.draw do
   resources :orders
   resources :users
   resources :buyers
-  resources :foods
   resources :carts
   resources :vouchers
   resources :tags
-  resources :restaurants
+  resources :reviews
+
+  resources :foods do
+    resources :reviews
+  end
+
+  resources :restaurants do
+    resources :reviews
+  end
 
   get 'store/index'
   get 'home/hello'

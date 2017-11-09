@@ -3,6 +3,7 @@ class Food < ApplicationRecord
   belongs_to :category, optional: true
   belongs_to :restaurant, optional: true
   has_many :line_items
+  has_many :reviews, as: :reviewable
   has_and_belongs_to_many :tags
 
   validates :name, :description, presence: true

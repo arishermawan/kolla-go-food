@@ -13,10 +13,11 @@ Food.create!(
   name: "Tenderloin Steak",
   description:
   %{<p>
-    Best Tenderloin food in Jakarta, Delicious!!
+    Best Tenderloin Steak in Jakarta, Delicious!!
     </p>},
   image_url:"tenderloin.jpg",
-  price: 99000.00
+  price: 99000.00,
+  category_id:2
   )
 
 
@@ -24,10 +25,11 @@ Food.create!(
   name: "Ayam Geprek",
   description:
   %{<p>
-    ayam yang goreng yang digeprek
+    Fried Chiked, mixed white traditional chily, so hot and very good taste!!!
     </p>},
   image_url:"ayam_geprek.jpg",
-  price: 15000.00
+  price: 15000.00,
+  category_id:1
   )
 
 Food.create!(
@@ -37,7 +39,8 @@ Food.create!(
     sundanese original food, mixed rice and oncom (permented soy bean), with chily and some vegetables, Maakkkyosss!!
     </p>},
   image_url:"tutug_oncom.jpg",
-  price: 15000.00
+  price: 15000.00,
+  category_id:1
   )
 
 Food.create!(
@@ -46,7 +49,8 @@ Food.create!(
   %{<p>
     Mie Goreng (Fried Noodle) Tek Tek is like Indonesian national street food. The fact that the sellers are using street cart and dragging the cart around all neighbourhoods while creating the noise to attract the potential dinner hunger customers (you don't definitely need to go to their cart, in fact they will approach your house gate and cook in front of your house) . The sellers are creating the noise by hitting the wok pan that sounds like "tag tag" or "tek tek" in Indonesian spelling. That's where the name tek tek comes from.</p>},
   image_url:"bakmi_golek.jpg",
-  price: 18000.00
+  price: 18000.00,
+  category_id:1
   )
 
 Buyer.delete_all
