@@ -22,9 +22,9 @@
         <td class="list_action">
           <%= link_to 'Show', review %>
           <% if review.reviewable_type=="Food" %>
-            <%= link_to 'Edit', edit_food_review_path(food_id:reviewable_id) %>
+            <%= link_to 'Edit', edit_food_review_path(food_id:@reviewable_id) %>
           <% else %>
-            <%= link_to 'Edit', edit_restaurant_review_path(restaurant_id:reviewable_id) %>
+            <%= link_to 'Edit', edit_restaurant_review_path(restaurant_id:@reviewable_id) %>
           <% end %>
           <%= link_to 'Destroy', review, method: :delete, data: { confirm: 'Are you sure?' } %>
         </td>

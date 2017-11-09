@@ -1,5 +1,6 @@
 class ReviewsController < ApplicationController
   before_action :set_review, only: [:show, :edit, :update, :destroy]
+  before_action :load_reviewable
 
   def index
     @reviews = Review.all
@@ -8,28 +9,17 @@ class ReviewsController < ApplicationController
   def show
   end
 
+
   def new
 
-    @reviewable_type
-    @reviewable_id
-
-    if params[:food_id].present?
-      @reviewable_type = "Food"
-      @reviewable_id = params[:food_id]
-    elsif params[:restaurant_id].present?
-      @reviewable_type = "Restaurant"
-      @reviewable_id = params[:restaurant_id]
-    end
-
-    @review = Review.new
+    @review = @reviewable.reviews.new
   end
 
   def edit
   end
 
   def create
-    @review = Review.new(reviews_params)
-
+    @review = @reviewable.reviews.new(reviews_params)
     respond_to do |format|
       if @review.save
         format.html { redirect_to store_index_url, notice: 'Review was successfully created.' }
@@ -41,7 +31,7 @@ class ReviewsController < ApplicationController
     end
   end
 
-  # def update
+  # def update`
   #   respond_to do |format|
   #     if @review.update(reviews_params)
   #       format.html { redirect_to @review, notice: 'Review was successfully updated.' }
@@ -64,6 +54,11 @@ class ReviewsController < ApplicationController
   private
     def set_review
       @review = Review.find(params[:id])
+    end
+
+    def load_reviewable
+      klass = [Food, Restaurant].detect { |c| params["#{c.name.underscore}_id"] }
+      @reviewable = klass.find{params["#{klass.name.underscore}_id"]}
     end
 
     def reviews_params
