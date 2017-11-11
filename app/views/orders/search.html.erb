@@ -1,0 +1,68 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Orders</h1>
+
+<%= form_tag("./", method: "get") do %>
+
+  <div class="field">
+    name
+    <%= text_field_tag :name, params[:name] %>
+  </div>
+
+  <div class="field">
+    address
+    <%= text_field_tag :address, params[:address] %>
+  </div>
+
+  <div class="field">
+    email
+    <%= text_field_tag :email, params[:email] %>
+  </div>
+
+  <div class="field">
+    min total price
+    <%= text_field_tag :min, params[:min] %>
+  </div>
+
+  <div class="field">
+    max total price
+    <%= text_field_tag :max, params[:max] %>
+  </div>
+
+  <div class="field">
+    <%= submit_tag 'Search', name: nil %>
+  </div>
+
+
+<% end %>
+<%= @orders.to_sql %>
+
+<table>
+  <tr>
+    <td>Id</td>
+    <td>Name</td>
+    <td>Address</td>
+    <td>Email</td>
+    <td>Payment</td>
+    <td>Voucers Code</td>
+    <td>Total Price</td>
+    <td>Action</td>
+  </tr>
+
+  <% @orders.each do|o| %>
+  <tr class="<%= cycle('list_line_odd','list_line_even')%>">
+    <td><%= o.id %></td>
+    <td><%= o.name %></td>
+    <td><%= o.address %></td>
+    <td><%= o.email %></td>
+    <td><%= o.payment_type %></td>
+
+    <td><% if o.voucher != nil  %><%= o.voucher.code %> <% end %> </td>
+    <td><%= number_to_currency(o.total_price, unit: "Rp ", delimiter: ".", separator: ",")  %></td>
+    <td>  <%= link_to 'Show', o %>
+          <%= link_to 'Edit', edit_order_path(o) %>
+          <%= link_to 'Destroy', o, method: :delete, data: { confirm: 'Are you sure?' } %>
+    </td>
+  </tr>
+  <% end %>
+</table>

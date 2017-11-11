@@ -6,7 +6,14 @@ class FoodsController < ApplicationController
   def index
     # @foods = Food.all
     # @foods = Food.by_letter(params[:letter])
-    @foods = params[:letter].nil? ? Food.all : Food.by_letter(params[:letter])
+
+    if params[:term]
+      @foods = Food.where('name LIKE ?', "%#{params[:name]}%")
+    else
+      @foods = params[:letter].nil? ? Food.all : Food.by_letter(params[:letter])
+    end
+
+
   end
 
   # GET /foods/1
@@ -48,8 +55,8 @@ class FoodsController < ApplicationController
       if @food.update(food_params)
         format.html { redirect_to @food, notice: 'Food was successfully updated.' }
         format.json { render :show, status: :ok, location: @food }
-        @foods = Food.order(:name)
-        ActionCable.server.broadcast 'foods', html: render_to_string('store/index', layout: false)
+        # @foods = Food.order(:name)
+        # ActionCable.server.broadcast 'foods', html: render_to_string('store/index', layout: false)
       else
         format.html { render :edit }
         format.json { render json: @food.errors, status: :unprocessable_entity }
@@ -75,6 +82,6 @@ class FoodsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def food_params
-      params.require(:food).permit(:name, :description, :image_url, :price, :category_id, :restaurant_id, tag_ids:[])
+      params.require(:food).permit(:name, :description, :image_url, :price, :category_id, :restaurant_id, :term, tag_ids:[])
     end
 end

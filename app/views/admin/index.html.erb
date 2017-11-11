@@ -1,2 +1,112 @@
 <h1>Admin#index</h1>
 <p>Find me in app/views/admin/index.html.erb</p>
+
+
+<%= form_tag(admin_path method: :get) do %>
+  <div class="field">
+    Name <%= text_field_tag :name, params[:name] %>
+  </div>
+  <div class="field">
+    Description <%= text_field_tag :desc, params[:desc] %>
+  </div>
+  <div class="field">
+    Minimum Price <%= text_field_tag :min, params[:min] %>
+  </div>
+  <div class="field">
+    Maximum <%= text_field_tag :max, params[:max] %>
+  </div>
+  <div class="field">
+  <%= button_tag 'Search', :name=> 'submit', :value=> 'food' %>
+  </div>
+  <%= @foods.to_sql if !@foods.nil? %>
+<% end %>
+
+<%= params[:submit] %>
+
+
+<% if !@foods.nil? %>
+  <%= render 'store/foods' %>
+<% end %>
+
+<%= form_tag(admin_path method: :get) do %>
+
+  <div class="field">
+    name
+    <%= text_field_tag :name, params[:name] %>
+  </div>
+
+  <div class="field">
+    address
+    <%= text_field_tag :address, params[:address] %>
+  </div>
+
+  <div class="field">
+    email
+    <%= text_field_tag :email, params[:email] %>
+  </div>
+
+  <div class="field">
+    payment
+    <% payment_array = Order.payment_types.map{ |k, v| [k, v] } %>
+    <%= select_tag(:payment, options_for_select(payment_array, params[:payment]), {include_blank: 'Select a Payment'}) %>
+  </div>
+
+  <div class="field">
+    min total price
+    <%= text_field_tag :min, params[:min] %>
+  </div>
+
+  <div class="field">
+    max total price
+    <%= text_field_tag :max, params[:max] %>
+  </div>
+
+  <div class="field">
+  <%= button_tag 'Search', :name=> 'submit', :value=> 'order' %>
+  </div>
+
+  <%= @orders.to_sql if !@orders.nil? %>
+
+<% end %>
+<p>
+payment:<%= params[:payment] %>
+</p>
+
+<% if !@orders.nil? %>
+  <%= render 'orders/orders' %>
+<% end %>
+
+
+<%= form_tag(admin_path method: :get) do %>
+
+  <div class="field">
+    name
+    <%= text_field_tag :name, params[:name] %>
+  </div>
+
+  <div class="field">
+    address
+    <%= text_field_tag :address, params[:address] %>
+  </div>
+
+  <div class="field">
+    min food
+    <%= text_field_tag :min, params[:min] %>
+  </div>
+
+  <div class="field">
+    max food
+    <%= text_field_tag :max, params[:max] %>
+  </div>
+
+  <div class="field">
+  <%= button_tag 'Search', :name=> 'submit', :value=> 'restaurant' %>
+  </div>
+
+  <%= @restaurants.to_sql if !@restaurants.nil? %>
+
+<% end %>
+
+<% if !@restaurants.nil? %>
+  <%= render 'restaurants/restaurants' %>
+<% end %>

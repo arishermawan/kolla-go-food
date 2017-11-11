@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
   get 'admin' => 'admin#index'
+  post 'admin' => 'admin#index'
+  get 'orders/search' => 'orders#search'
+  post 'orders/search' => 'orders#search'
 
   root 'store#index', as: 'store_index'
 

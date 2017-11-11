@@ -2,25 +2,6 @@
 
 <h1>Restaurants List</h1>
 
-<table>
-  <tr>
-    <td>Id</td>
-    <td>Name</td>
-    <td>Address</td>
-    <td>Action</td>
-  </tr>
-
-  <% @restaurants.each do|o| %>
-  <tr class="<%= cycle('list_line_odd','list_line_even')%>">
-    <td><%= o.id %></td>
-    <td><%= o.name %></td>
-    <td><%= o.address %></td>
-    <td>  <%= link_to 'Show', o %>
-          <%= link_to 'Edit', edit_restaurant_path(o) %>
-          <%= link_to 'Destroy', o, method: :delete, data: { confirm: 'Are you sure?' } %>
-    </td>
-  </tr>
-  <% end %>
-</table>
+<%= render 'restaurants/restaurants' %>
 
 <%= link_to 'New Restaurant', new_restaurant_path %>
