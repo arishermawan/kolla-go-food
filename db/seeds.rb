@@ -90,3 +90,140 @@ Category.create!(
 Category.create!(
   name: 'Soft Drik'
 )
+Food::HABTM_Tags.create!([
+  {food_id: 1, tag_id: 1},
+  {food_id: 1, tag_id: 2},
+  {food_id: 2, tag_id: 1},
+  {food_id: 2, tag_id: 2},
+  {food_id: 2, tag_id: 3},
+  {food_id: 2, tag_id: 4},
+  {food_id: 2, tag_id: 5},
+  {food_id: 2, tag_id: 6},
+  {food_id: 2, tag_id: 7},
+  {food_id: 1, tag_id: 6},
+  {food_id: 3, tag_id: 7},
+  {food_id: 208, tag_id: 6},
+  {food_id: 208, tag_id: 7},
+  {food_id: 209, tag_id: 2},
+  {food_id: 210, tag_id: 1},
+  {food_id: 210, tag_id: 6},
+  {food_id: 211, tag_id: 2},
+  {food_id: 211, tag_id: 4},
+  {food_id: 211, tag_id: 6},
+  {food_id: 212, tag_id: 1},
+  {food_id: 212, tag_id: 4},
+  {food_id: 212, tag_id: 7}
+])
+Tag::HABTM_Foods.create!([
+  {food_id: 1, tag_id: 1},
+  {food_id: 1, tag_id: 2},
+  {food_id: 2, tag_id: 1},
+  {food_id: 2, tag_id: 2},
+  {food_id: 2, tag_id: 3},
+  {food_id: 2, tag_id: 4},
+  {food_id: 2, tag_id: 5},
+  {food_id: 2, tag_id: 6},
+  {food_id: 2, tag_id: 7},
+  {food_id: 1, tag_id: 6},
+  {food_id: 3, tag_id: 7},
+  {food_id: 208, tag_id: 6},
+  {food_id: 208, tag_id: 7},
+  {food_id: 209, tag_id: 2},
+  {food_id: 210, tag_id: 1},
+  {food_id: 210, tag_id: 6},
+  {food_id: 211, tag_id: 2},
+  {food_id: 211, tag_id: 4},
+  {food_id: 211, tag_id: 6},
+  {food_id: 212, tag_id: 1},
+  {food_id: 212, tag_id: 4},
+  {food_id: 212, tag_id: 7}
+])
+Buyer.create!([
+  {email: "arishermawan@hotmail.com", name: "aris hermawan", phone: "082310232303", address: "jln azalea raya no 3 lippo cikarang"},
+  {email: "i@arishermawan.id", name: "aris hermawan", phone: "082310232303", address: "jln azalea raya no 2 lippo cikarang"},
+  {email: "rizhima@gmail.com", name: "aris hermawan", phone: "082310232303", address: "jln azalea raya no 1 lippo cikarang"}
+])
+Cart.create!([
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {}
+])
+Category.create!([
+  {name: "Traditonal"},
+  {name: "Fast Food"},
+  {name: "Soft Drik"}
+])
+Food.create!([
+  {name: "Meat Steak", description: "<p>\r\n    daging terbaik dari sapi alami\r\n    </p>", image_url: "tenderloin.jpg", price: "99000.0", category_id: 2, restaurant_id: 2},
+  {name: "Ayam Geprek", description: "<p>\r\n    ayam yang goreng yang digeprek \r\n    </p>", image_url: "ayam_geprek.jpg", price: "15000.0", category_id: 1, restaurant_id: 1},
+  {name: "Tutug Oncom", description: "<p>\r\n    nasi diulek oncom dilengkapi sambal terasi dan timun \r\n    </p>", image_url: "tutug_oncom.jpg", price: "17000.0", category_id: 1, restaurant_id: 1},
+  {name: "Bakmi Special", description: "<p>Bakmi Golek</p>", image_url: "bakmi_golek.jpg", price: "25000.0", category_id: 1, restaurant_id: 4},
+  {name: "Keripik Maicih", description: "<p> keripik maicih </p>", image_url: "maicih.png", price: "16000.0", category_id: 2, restaurant_id: 6},
+  {name: "Sukiyaki", description: "<p> Ramen from konoha </p>", image_url: "sukiyaki.jpg", price: "59000.0", category_id: 2, restaurant_id: 5},
+  {name: "Udon", description: "<p>Ramen From Konoha</p>", image_url: "udon.jpg", price: "45000.0", category_id: 2, restaurant_id: 5},
+  {name: "Ayam Geprek Komplit ", description: "<p> ayam geprek plus tahu tempe</p>", image_url: "ayam_geprek.jpg", price: "19000.0", category_id: 1, restaurant_id: 1}
+])
+LineItem.create!([
+  {food_id: 2, cart_id: nil, quantity: 2, order_id: 25},
+  {food_id: 3, cart_id: nil, quantity: 2, order_id: 25},
+  {food_id: 3, cart_id: nil, quantity: 2, order_id: 26},
+  {food_id: 1, cart_id: nil, quantity: 3, order_id: 26},
+  {food_id: 2, cart_id: nil, quantity: 2, order_id: 27},
+  {food_id: 3, cart_id: nil, quantity: 1, order_id: 27},
+  {food_id: 208, cart_id: nil, quantity: 1, order_id: 27},
+  {food_id: 211, cart_id: nil, quantity: 1, order_id: 27}
+])
+Order.create!([
+  {name: "Aris Hermawan", address: "Sabang Jakarta", email: "a@ri.s", payment_type: "Go Pay", voucher_id: 3, total: "57600.0"},
+  {name: "Budi Utomo", address: "Pondok Pinang, Jakarta", email: "b@u.i", payment_type: "Go Pay", voucher_id: 3, total: "311000.0"},
+  {name: "aris herm", address: "jakarta", email: "arishermawan@hotmail.com", payment_type: "Cash", voucher_id: nil, total: "117000.0"}
+])
+Restaurant.create!([
+  {name: "Bumbu Desa", address: "Sabang, Jakarta"},
+  {name: "Bang Bang Steak", address: "Jl. Kebon Sirih No 7"},
+  {name: "Bakmi Golek", address: "Sarinah Mall Lt 6"},
+  {name: "Yashinoya", address: "Blok M Square Lt 6"},
+  {name: "Wonder Juice Bar", address: "Paris van Java Bandung"}
+])
+Review.create!([
+  {name: "aris", title: "Coba Coba bray", description: "jdfladf asklfjalkdf lksjflakjdflas flkasjdflj", reviewable_type: "Restaurant", reviewable_id: 1},
+  {name: "Aris Hermawan", title: "Fantastic!!!", description: "Restoran dengan menu klasik yang mantaps", reviewable_type: "Restaurant", reviewable_id: 1},
+  {name: "Aris Hermawan", title: "Mantap ", description: "Pedasnya mantaps", reviewable_type: "Food", reviewable_id: 2},
+  {name: "Aris Hermawan", title: "Daging Empuk", description: "Dagingnya Empuk Bangetssssss", reviewable_type: "Food", reviewable_id: 1},
+  {name: "Crystal Widjadja", title: "Unbreakable Taste!!", description: "Just 1 word 1 have to say to this Restaurant, Amazinggg!!!!!", reviewable_type: "Restaurant", reviewable_id: 1},
+  {name: "Aris Hermawan", title: "dkjfald", description: "lkdsafjdlfjasldfjlsajflkdsjf", reviewable_type: "Restaurant", reviewable_id: 1},
+  {name: "kljflads", title: "djflkasld", description: "dafldjfadslf", reviewable_type: "Food", reviewable_id: 1},
+  {name: "Aris Hermawan", title: "Mantap", description: "ok oko oko oko", reviewable_type: "Restaurant", reviewable_id: 1},
+  {name: "ok", title: "ok", description: "ok", reviewable_type: "Restaurant", reviewable_id: 1}
+])
+Tag.create!([
+  {name: "street food"},
+  {name: "sweet spicy"},
+  {name: "junkfood"},
+  {name: "hotfood"},
+  {name: "extremefood"},
+  {name: "5 star"},
+  {name: "indonesian original"}
+])
+User.create!([
+  {username: "aris", password_digest: "$2a$10$m7JFjq34NfOg03fxMhcYSO6zaYloCUtEGyJ9VDmzhZI0vbYrdyhri"}
+])
+Voucher.create!([
+  {code: "15PERSEN", valid_from: "2017-11-05", valid_through: "2017-11-15", amount: "15.0", unit_type: "% (Persentage)", max_amount: "30000.0"},
+  {code: "NYOBAAJA", valid_from: "2017-11-05", valid_through: "2017-11-13", amount: "10000.0", unit_type: "Rp (Rupiah)", max_amount: "9000.0"},
+  {code: "10PERSEN", valid_from: "2017-11-05", valid_through: "2017-11-13", amount: "10.0", unit_type: "% (Persentage)", max_amount: "20000.0"},
+  {code: "GRATIS50K", valid_from: "2017-11-05", valid_through: "2017-11-05", amount: "50000.0", unit_type: "Rp (Rupiah)", max_amount: "50000.0"}
+])

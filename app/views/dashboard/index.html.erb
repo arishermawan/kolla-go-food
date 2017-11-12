@@ -1,0 +1,12 @@
+<h1>Dashboard#index</h1>
+<p>Find me in app/views/dashboard/index.html.erb</p>
+
+<%= @order_res %>
+<%= bar_chart @res_total %>
+
+<%= bar_chart @food_qty %>
+<%= bar_chart @food_total %>
+<%= bar_chart Food.group(:restaurant_id).sum(:price) %>
+<%= line_chart Order.group_by_day(:created_at).count %>
+<%= pie_chart Food.group(:restaurant).count %>
+<%= pie_chart({"Football" => 10, "Basketball" => 5}) %>

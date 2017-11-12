@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  get 'dashboard/index'
+  get 'dashboard' => 'dashboard#index'
+
   get 'admin' => 'admin#index'
   post 'admin' => 'admin#index'
   get 'orders/search' => 'orders#search'

@@ -36,7 +36,7 @@ class AdminController < ApplicationController
     end
   end
 
-    def food_params
-      params.require(:food).permit(:name, :description, :image_url, :price, :category_id, :restaurant_id, :term, tag_ids:[])
-    end
+  def dashboard
+  end
+  
 end
