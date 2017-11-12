@@ -5,22 +5,19 @@
 <h3>Costumers Reviews</h3>
 
 <% if @reviews != nil %>
-  <table>
-    <tr>
-      <td>Name</td>
-      <td>Review</td>
-
-    </tr>
-  <% @reviews.each do |r| %>
-    <tr>
-      <td><%= r.name %></td>
-      <td> <strong><%= r.title %></strong><br>
+   <% @reviews.each do |r| %>
+    <div class="comment-main-level">
+      <div class="comment-box">
+        <div class="comment-head">
+          <h6 class="comment-name by-name"><%= r.name %></h6>
+          <span><%= r.created_at %></span>
+        </div>
+        <div class="comment-content">
           <%= r.description %>
-      </td>
-    </tr>
-
+        </div>
+      </div>
+    </div>
   <% end %>
-  </table>
 <% else %>
 
   No Reviews

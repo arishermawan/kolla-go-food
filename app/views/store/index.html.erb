@@ -2,9 +2,9 @@
 
 <% @restaurants.each do |r| %>
 
-  <h1><%= r.name %></h1>
+  <h1><%= r.name %> <%= link_to 'Write Review', new_restaurant_review_path(restaurant_id: r), :class => "btn btn-warning btn-sm" %> </h1>
   <h3><%= r.address %></h3>
-  <%= link_to 'Write Review', new_restaurant_review_path(restaurant_id: r)  %>
+
   <% @foods = r.foods %>
   <%= render 'store/foods' %>
   <br>

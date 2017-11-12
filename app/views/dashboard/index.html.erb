@@ -1,12 +1,42 @@
-<h1>Dashboard#index</h1>
-<p>Find me in app/views/dashboard/index.html.erb</p>
+<div class="container">
 
-<%= @order_res %>
-<%= bar_chart @res_total %>
 
-<%= bar_chart @food_qty %>
-<%= bar_chart @food_total %>
-<%= bar_chart Food.group(:restaurant_id).sum(:price) %>
-<%= line_chart Order.group_by_day(:created_at).count %>
-<%= pie_chart Food.group(:restaurant).count %>
-<%= pie_chart({"Football" => 10, "Basketball" => 5}) %>
+
+  <h1>Dashboard#index</h1>
+  <p>Find me in app/views/dashboard/index.html.erb</p>
+  <div class="row">
+    <div class="col-lg-6">
+      <h3>Order Count by Date</h3>
+      <%= line_chart Order.group_by_day(:created_at).count, label: "Qty" %>
+    </div>
+
+    <div class="col-lg-6">
+    <h3>Total Order by Date</h3>
+    <%= area_chart @order_sum, label: "Rupiah" %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <h3>Total Every Foods Sell</h3>
+      <%= bar_chart @food_qty, label: "Food Qty" %>
+    </div>
+
+    <div class="col-lg-6">
+    <h3>Total Price Every Foods</h3>
+    <%= bar_chart @food_total, label: "Rupiah" %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+    <h3>Restaurant Count By Order</h3>
+    <%= pie_chart @restaurant_order_count, label: "Order Qty" %>
+    </div>
+
+    <div class="col-lg-6">
+    <h3>Restaurant Total Price by Order</h3>
+    <%= pie_chart @res_total, label: "Rupiah" %>
+    </div>
+  </div>
+</div>
