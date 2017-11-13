@@ -26,14 +26,5 @@ class DashboardController < ApplicationController
         @restaurant_order_count[a] += 1
       end
     end
-
-    # @order_restaurant= Hash.new
-    # Order.all.each do |order|
-    #   res_array=[]
-    #   order.line_items.each do |line|
-    #     res_array << line.food.restaurant.name
-    #   end
-    #   @order_restaurant[order.id] = res_array.uniq
-    # end
   end
 end
