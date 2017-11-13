@@ -120,7 +120,7 @@ describe UsersController do
       end
     end
 
-    context "with valid attributes" do
+    context "with invalid attributes" do
 
       it "doesnot update the user in the database" do
         patch :update, params:{ id:@user, user:attributes_for(:user, password: nil, password_confirmation: nil) }
@@ -132,6 +132,33 @@ describe UsersController do
          patch :update, params:{ id:@user, user:attributes_for(:invalid_user) }
          expect(response).to render_template :edit
       end
+    end
+
+    context "with valid gopay attributes" do
+      it "add gopay credit and save in the database" do
+       patch :update, params: { id:@user, user:attributes_for(:user, gopay:100000) }
+       @user.reload
+       expect(@user.gopay).to eq(300000)
+      end
+
+      it "redirect to user#index" do
+         patch :update, params:{ id:@user, user:attributes_for(:user) }
+         expect(response).to redirect_to users_url
+      end
+    end
+
+    context "with invalid gopay attribute" do
+      it "doesn't update gopay credit" do
+        patch :update, params: { id:@user, user:attributes_for(:user, gopay:'100ribu') }
+       @user.reload
+       expect(@user.gopay).not_to eq(300000)
+      end
+
+      it "re-renders the :topup template" do
+         patch :update, params:{ id:@user, user:attributes_for(:user, gopay:nil) }
+         expect(response).to render_template :topup
+      end
+
     end
   end
 
