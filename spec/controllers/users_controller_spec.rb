@@ -149,13 +149,13 @@ describe UsersController do
 
     context "with invalid gopay attribute" do
       it "doesn't update gopay credit" do
-        patch :update, params: { id:@user, user:attributes_for(:user, gopay:'100ribu') }
+        patch :update, params: { id:@user, user:attributes_for(:user, gopay:'ribu') }
        @user.reload
        expect(@user.gopay).not_to eq(300000)
       end
 
       it "re-renders the :topup template" do
-         patch :update, params:{ id:@user, user:attributes_for(:user, gopay:'100ribu') }
+         patch :update, params:{ id:@user, user:attributes_for(:user, gopay:'ribu') }
          expect(response).to render_template :topup
       end
 

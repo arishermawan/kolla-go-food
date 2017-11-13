@@ -39,7 +39,9 @@ class UsersController < ApplicationController
     respond_to do |format|
 
       if !params[:user][:gopay].nil?
-        # params[:user][:gopay] = params[:user][:gopay] + @user.gopay
+         if params[:user][:gopay].to_i != 0 && !params[:user][:gopay].match(/[^0-9]/)
+          params[:user][:gopay] = params[:user][:gopay].to_i + @user.gopay
+         end
         if @user.update(gopay_params)
           format.html { redirect_to users_url, notice: 'user was successfully updated.' }
           format.json { render :show, status: :ok, location: @user }
