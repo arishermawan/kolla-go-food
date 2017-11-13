@@ -155,7 +155,7 @@ describe UsersController do
       end
 
       it "re-renders the :topup template" do
-         patch :update, params:{ id:@user, user:attributes_for(:user, gopay:nil) }
+         patch :update, params:{ id:@user, user:attributes_for(:user, gopay:'100ribu') }
          expect(response).to render_template :topup
       end
 

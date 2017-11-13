@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :topup]
 
   def index
     @users = User.all
@@ -14,6 +14,10 @@ class UsersController < ApplicationController
   end
 
   def edit
+  end
+
+  def topup
+
   end
 
 
@@ -33,15 +37,24 @@ class UsersController < ApplicationController
 
   def update
     respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to users_url, notice: 'user was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
 
-        # @users = User.all
-        # ActionCable.server.broadcast 'users', html: render_to_string('store/index', layout: false)
+      if !params[:user][:gopay].nil?
+        # params[:user][:gopay] = params[:user][:gopay] + @user.gopay
+        if @user.update(gopay_params)
+          format.html { redirect_to users_url, notice: 'user was successfully updated.' }
+          format.json { render :show, status: :ok, location: @user }
+        else
+          format.html { render :topup }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        if @user.update(user_params)
+          format.html { redirect_to users_url, notice: 'user was successfully updated.' }
+          format.json { render :show, status: :ok, location: @user }
+        else
+          format.html { render :edit }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -61,6 +74,9 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def gopay_params
+    params.require(:user).permit(:gopay)
+  end
 
   def user_params
     params.require(:user).permit(:username, :password, :password_confirmation, role_ids:[])
