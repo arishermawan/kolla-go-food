@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171102065533) do
+ActiveRecord::Schema.define(version: 20171110063748) do
 
   create_table "buyers", force: :cascade do |t|
     t.string "email"
@@ -40,7 +40,16 @@ ActiveRecord::Schema.define(version: 20171102065533) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "category_id"
+    t.integer "restaurant_id"
     t.index ["category_id"], name: "index_foods_on_category_id"
+    t.index ["restaurant_id"], name: "index_foods_on_restaurant_id"
+  end
+
+  create_table "foods_tags", id: false, force: :cascade do |t|
+    t.integer "food_id"
+    t.integer "tag_id"
+    t.index ["food_id"], name: "index_foods_tags_on_food_id"
+    t.index ["tag_id"], name: "index_foods_tags_on_tag_id"
   end
 
   create_table "line_items", force: :cascade do |t|
@@ -60,11 +69,48 @@ ActiveRecord::Schema.define(version: 20171102065533) do
     t.integer "payment_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "voucher_id"
+    t.decimal "total"
+  end
+
+  create_table "restaurants", force: :cascade do |t|
+    t.string "name"
+    t.text "address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.string "name"
+    t.string "title"
+    t.text "description"
+    t.string "reviewable_type"
+    t.integer "reviewable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable_type_and_reviewable_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "vouchers", force: :cascade do |t|
+    t.string "code"
+    t.date "valid_from"
+    t.date "valid_through"
+    t.decimal "amount"
+    t.integer "unit_type"
+    t.decimal "max_amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

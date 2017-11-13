@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+<h1><%= @restaurant.name %></h1>
+<p><%= @restaurant.address %></p>
+
+<h3>Costumers Reviews</h3>
+
+<% if @reviews != nil %>
+   <% @reviews.each do |r| %>
+    <div class="comment-main-level">
+      <div class="comment-box">
+        <div class="comment-head">
+          <h6 class="comment-name by-name"><%= r.name %></h6>
+          <span><%= r.created_at %></span>
+        </div>
+        <div class="comment-content">
+          <%= r.description %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+
+  No Reviews
+
+<% end %>
+
+
+<h3>list food :</h3>
+<%= render 'store/foods' %>

@@ -1,5 +1,18 @@
 <p id="notice"><%= notice %></p>
 
+<%= form_tag(foods_path) do %>
+  <%= text_field_tag :term %>
+  <%= submit_tag 'Search' %>
+<% end %>
+
+
+
+<% for food in @foods %>
+<div class='task'>
+    <strong> <%= food.name %> </strong>
+</div>
+<% end %>
+
 <h1>Foods</h1>
 
 <table>

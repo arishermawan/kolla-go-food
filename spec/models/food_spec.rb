@@ -66,25 +66,29 @@ describe Food do
   end
 
 
-describe "returns a sorted array of results that match" do
-  before :each do
-    @food1 = create(:food, name:"Nasi Rames")
-    @food2 = create(:food, name:"Semangka")
-    @food3 = create(:food, name:"Nasi Kuning")
-  end
+  describe "returns a sorted array of results that match" do
+    before :each do
+      @food1 = create(:food, name:"Nasi Rames")
+      @food2 = create(:food, name:"Semangka")
+      @food3 = create(:food, name:"Nasi Kuning")
+    end
 
-  context "it macthing letters" do
-    it "returns a sorted array of results that match" do
-      expect(Food.by_letter("N")).to eq([@food3, @food1])
+    context "it macthing letters" do
+      it "returns a sorted array of results that match" do
+        expect(Food.by_letter("N")).to eq([@food3, @food1])
+      end
+    end
+
+    context "with non matching letters do" do
+      it "omits results that do not match" do
+         expect(Food.by_letter("N")).not_to eq(@food2)
+      end
     end
   end
 
-  context "with non matching letters do" do
-    it "omits results that do not match" do
-       expect(Food.by_letter("N")).not_to eq(@food2)
-    end
-  end
-end
+  # describe "relations" do
+  #   it { should have_many(:foods_tags) }
+  # end
 
   describe Food do
     it "has a valid factory" do

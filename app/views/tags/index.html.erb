@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Tags List</h1>
+
+<table>
+    <% @tags.each do |tag| %>
+      <tr class="<%= cycle('list_line_odd','list_line_even')%>">
+        <td>
+        </td>
+        <td>
+            <h3><%= tag.id %></h3>
+        </td>
+        <td>
+            <h3><%= tag.name %></h3>
+        </td>
+
+
+        <td class="list_action">
+        <h3>
+
+          <%= link_to 'Show', tag %>
+          <%= link_to 'Edit', edit_tag_path(tag) %>
+          <%= link_to 'Destroy', tag, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </h3>
+        </td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<%= link_to 'New tag', new_tag_path %>

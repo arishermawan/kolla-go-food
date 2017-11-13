@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Voucers List</h1>
+
+<table class="table">
+  <tr>
+    <td>Id</td>
+    <td>Code</td>
+    <td>Valid from</td>
+    <td>Valid through</td>
+    <td>Amount</td>
+    <td>Unit Type</td>
+    <td>Max Amount</td>
+    <td>Action </td>
+  </tr>
+
+  <% @vouchers.each do|o| %>
+  <tr class="<%= cycle('list_line_odd','list_line_even')%>">
+    <td><%= o.id %></td>
+    <td><%= o.code %></td>
+    <td><%= o.valid_from %></td>
+    <td><%= o.valid_through %></td>
+    <td><%= o.amount %></td>
+    <td><%= o.unit_type %></td>
+    <td><%= number_to_currency(o.max_amount, unit: "Rp ", delimiter: ".", separator: ",")  %></td>
+    <td>  <%= link_to 'Show', o, :class => "btn btn-default btn-xs" %>
+          <%= link_to 'Edit', edit_voucher_path(o), :class => "btn btn-warning btn-xs" %>
+          <%= link_to 'Destroy', o, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-xs" %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+
+<%= button_to 'New Voucher', new_voucher_path, :class => "btn btn-success btn-sm"  %>

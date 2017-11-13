@@ -27,5 +27,28 @@
   <% end %>
 </p>
 
+<% if @reviews != nil %>
+  <table>
+    <tr>
+      <td>Name</td>
+      <td>Review</td>
+
+    </tr>
+  <% @reviews.each do |r| %>
+    <tr>
+      <td><%= r.name %></td>
+      <td> <strong><%= r.title %></strong><br>
+          <%= r.description %>
+      </td>
+    </tr>
+
+  <% end %>
+  </table>
+<% else %>
+
+  No Reviews
+
+<% end %>
+
 <%= link_to 'Edit', edit_food_path(@food) %> |
 <%= link_to 'Back', foods_path %>

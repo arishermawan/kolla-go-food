@@ -1,8 +1,8 @@
-body, body > p, body > ol, body > ul, body > td {margin: 8px !important}
+body, body > p, body > ol, body > ul, body > td {margin: 0px !important}
 
 #banner {
   position: relative;
-  min-height: 40px;
+  min-height: 60px;
   background: #9c9;
   padding: 10px;
   border-bottom: 2px solid;
@@ -93,7 +93,7 @@ body, body > p, body > ol, body > ul, body > td {margin: 8px !important}
 }
 
 
-.orders, .categories, .buyers, .foods {
+ .orders, .categories, .buyers, .foods {
   table {
     border-collapse: collapse;
   }
@@ -138,6 +138,17 @@ body, body > p, body > ol, body > ul, body > td {margin: 8px !important}
 
   .list_line_odd {
     background: #60e69a;
+  }
+
+  .box {
+    float: left;
+    width: 100px;
+    height: 50px;
+    margin: 10px;
+  }
+
+  .after-box {
+      clear: left;
   }
 }
 

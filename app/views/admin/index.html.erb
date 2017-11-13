@@ -1,2 +1,130 @@
-<h1>Admin#index</h1>
-<p>Find me in app/views/admin/index.html.erb</p>
+
+
+<div class="container-fluid">
+  <div class="row">
+    <h1>Admin#index</h1>
+    <p>Find me in app/views/admin/index.html.erb</p>
+
+    <%= params %>
+
+    <div class="col-md-4">
+      <%= form_tag admin_path, method: :get do %>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <%= text_field_tag :name, params[:name], :class => "input-xs" %>
+        </div>
+        <div class="form-group">
+          <label for="">Description</label>
+          <%= text_field_tag :desc, params[:desc] %>
+        </div>
+        <div class="form-group">
+          <label for="min">min price</label>
+          <%= text_field_tag :min, params[:min] %>
+        </div>
+        <div class="form-group">
+          <label for="">max price</label>
+          <%= text_field_tag :max, params[:max] %>
+        </div>
+        <div class="form-group">
+        <%= button_tag 'Search', :name=> 'submit', :value=> 'food' %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="col-md-4">
+      <%= form_tag(admin_path method: :get) do %>
+
+        <div class="form-group">
+          <label for="name">Name</label>
+          <%= text_field_tag :name, params[:name] %>
+        </div>
+
+        <div class="form-group">
+          <label for="address">Adress</label>
+          <%= text_field_tag :address, params[:address] %>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <%= text_field_tag :email, params[:email] %>
+        </div>
+
+        <div class="form-group">
+          <label for="payment">Paymet Method</label>
+          <% payment_array = Order.payment_types.map{ |k, v| [k, v] } %>
+          <%= select_tag(:payment, options_for_select(payment_array, params[:payment]), {include_blank: 'Select a Payment'}) %>
+        </div>
+
+        <div class="form-group">
+          <label for="totalprice">Min Total Price</label>
+          <%= text_field_tag :min, params[:min] %>
+        </div>
+
+        <div class="form-group">
+          <label for="max price">Max Total Price</label>
+          <%= text_field_tag :max, params[:max] %>
+        </div>
+
+        <div class="form-group">
+        <%= button_tag 'Search', :name=> 'submit', :value=> 'order' %>
+        </div>
+
+      <% end %>
+    </div>
+
+
+    <div class="col-md-4">
+      <%= form_tag(admin_path method: :get) do %>
+
+        <div class="form-group">
+          <label for="name">Name</label>
+          <%= text_field_tag :name, params[:name] %>
+        </div>
+
+        <div class="form-group">
+          <label for="Adress">Adress</label>
+          <%= text_field_tag :address, params[:address] %>
+        </div>
+
+        <div class="form-group">
+          <label for="min food">Min Food Count</label>
+          <%= text_field_tag :min, params[:min] %>
+        </div>
+
+        <div class="form-group">
+          <label for="max food">Max Food Count</label>
+          <%= text_field_tag :max, params[:max] %>
+        </div>
+
+        <div class="form-group">
+        <%= button_tag 'Search', :name=> 'submit', :value=> 'restaurant' %>
+        </div>
+      <% end %>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <%= @foods.to_sql if !@foods.nil? %>
+        <% if !@foods.nil? %>
+          <%= render 'store/foods' %>
+        <% end %>
+
+        <%= @orders.to_sql if !@orders.nil? %>
+        <% if !@orders.nil? %>
+          <%= render 'orders/orders' %>
+        <% end %>
+
+
+        <%= @restaurants.to_sql if !@restaurants.nil? %>
+        <% if !@restaurants.nil? %>
+          <%= render 'restaurants/restaurants' %>
+        <% end %>
+
+      </div>
+    </div>
+
+
+  </div>
+</div>

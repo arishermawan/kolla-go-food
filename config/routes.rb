@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
 
+  get 'dashboard/index'
+  get 'dashboard' => 'dashboard#index'
+
   get 'admin' => 'admin#index'
+  post 'admin' => 'admin#index'
+  get 'orders/search' => 'orders#search'
+  post 'orders/search' => 'orders#search'
 
   root 'store#index', as: 'store_index'
 
@@ -9,8 +15,18 @@ Rails.application.routes.draw do
   resources :orders
   resources :users
   resources :buyers
-  resources :foods
   resources :carts
+  resources :vouchers
+  resources :tags
+  resources :reviews
+
+  resources :foods do
+    resources :reviews
+  end
+
+  resources :restaurants do
+    resources :reviews
+  end
 
   get 'store/index'
   get 'home/hello'
