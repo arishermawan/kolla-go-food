@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :voucher do
-    code "GOJEKINAJA"
+    sequence(:code) { |n| "Code-#{n}" }
     valid_from "2017-11-06"
     valid_through "2017-11-30"
     amount "15.0"

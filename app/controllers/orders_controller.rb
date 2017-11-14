@@ -1,41 +1,15 @@
 class OrdersController < ApplicationController
   include CurrentCart
-  skip_before_action :authorize, only: [:new, :create, ]
+  skip_before_action :authorize, only: [:new, :create ]
   before_action :set_cart, only: [:new, :create]
   before_action :cart_not_empty, only: [:new]
   before_action :set_order, only: [:edit, :update, :destroy, :show]
 
   def index
-    if params[:name]
-     fmax = params[:max]
-      if fmax == ""
-        fmax = Order.maximum(:total)
-      else
-        fmax = fmax.to_i
-      end
-
-      @orders = Order.where('name LIKE ?', "%#{params[:name]}%").where('address LIKE ?', "%#{params[:address]}%").where('email LIKE ?', "%#{params[:email]}%").where('total >= ?', "#{params[:min].to_i}").where('total <= ?', "#{fmax}")
-    else
-      @orders = Order.all
-    end
+    @orders = Order.all
   end
 
   def show
-  end
-
-  def search
-    if params[:name]
-     fmax = params[:max]
-      if fmax == ""
-        fmax = Order.maximum(:total)
-      else
-        fmax = fmax.to_i
-      end
-
-      @orders = Order.where('name LIKE ?', "%#{params[:name]}%").where('address LIKE ?', "%#{params[:address]}%").where('email LIKE ?', "%#{params[:email]}%").where('total >= ?', "#{params[:min].to_i}").where('total <= ?', "#{fmax}")
-    else
-      @orders = Order.all
-    end
   end
 
   def new
@@ -48,7 +22,7 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params)
     @order.add_line_items(@cart)
-    if @order.voucher_code != ''
+    if !@order.voucher_code.nil? && @order.voucher_code != ''
       @order.voucher_id = Voucher.find_by(code: @order.voucher_code).id
     end
     @order.total = @order.total_price
@@ -56,11 +30,10 @@ class OrdersController < ApplicationController
       if @order.save
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
+        # OrderMailer.received(@order).deliver_later # Active Jobs Asyncronus
+        OrderMailer.received(@order).deliver # Syncronus
 
-        # OrderMailer.received(@order).deliver_later  Active Jobs Asyncronus
-        # OrderMailer.received(@order).deliver # Syncronus
-
-        format.html{redirect_to @order, notice: "orders succesfully saved"}
+        format.html{render :show, notice: "orders succesfully saved"}
       else
         format.html{render :new}
       end

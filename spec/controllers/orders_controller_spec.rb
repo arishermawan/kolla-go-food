@@ -111,10 +111,10 @@ describe OrdersController do
         expect(session[:cart_id]).to eq(nil)
       end
 
-      it "redirect to store index" do
+      it "redirect to to detail order" do
         post :create, params:{ order: attributes_for(:order) }
-        expect(response).to redirect_to store_index_url
-      end
+        expect(response).to render_template :show
+        end
 
       it "sends order confirmation email" do
         expect{

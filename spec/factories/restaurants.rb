@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :restaurant do
-    name "Restaurant890"
+    sequence(:name) { |n| "Restaurant-#{n}" }
     address "Ini Restaurant"
   end
 
