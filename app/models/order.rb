@@ -28,6 +28,15 @@ class Order < ApplicationRecord
     line_items.reduce(0) { |sum, line_item| sum+line_item.total_price }
   end
 
+  def reduce_gopay
+    gopay =0
+    if payment_type == "Go Pay"
+      gopay = User.find(user_id).gopay
+      gopay -= total
+    end
+    gopay
+  end
+
 
   def discount
     if voucher != nil
@@ -49,6 +58,7 @@ class Order < ApplicationRecord
       0
     end
   end
+
 
   def total_price
     (sub_total - discount) < 0 ? 0 : sub_total - discount

@@ -99,5 +99,11 @@ describe User do
       expect(user.errors[:gopay]).to include("can't be blank")
     end
 
+    # it "reduce gopay after order save" do
+    #   user = create(:user)
+    #   order = create(:order, payment_type: "Go Pay", total: 50000, user: user)
+    #   User.update_gopay_from_order(order)
+    #   expect(user.gopay).to eq(150000)
+    # end
   end
 end
