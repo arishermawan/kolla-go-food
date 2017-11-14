@@ -6,6 +6,7 @@ FactoryGirl.define do
     payment_type "Cash"
 
     association :voucher
+    association :user
   end
 
   factory :invalid_order, parent: :order do

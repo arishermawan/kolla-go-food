@@ -2,6 +2,7 @@ class Order < ApplicationRecord
   attr_accessor :voucher_code
 
   belongs_to :voucher, optional:true
+  belongs_to :user
   has_many :line_items, dependent: :destroy
 
   enum payment_type: {

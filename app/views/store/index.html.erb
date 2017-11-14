@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-
+<p><%= session[:user_id] %></p>
 <% @restaurants.each do |r| %>
 
   <h1><%= r.name %> <%= link_to 'Write Review', new_restaurant_review_path(restaurant_id: r), :class => "btn btn-warning btn-sm" %> </h1>
