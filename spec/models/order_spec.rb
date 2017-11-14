@@ -158,4 +158,6 @@ describe Order do
     expect(order.errors[:payment_type]).to include("Gopay credit is not enough")
   end
 
+ 
+
 end

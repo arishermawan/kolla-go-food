@@ -15,6 +15,7 @@ class Order < ApplicationRecord
   validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
   validates :payment_type, inclusion: payment_types.keys
   validates_with VoucherValidator
+  validates_with GopayValidator
 
   def add_line_items(cart)
     cart.line_items.each do |item|
