@@ -145,4 +145,10 @@ describe Order do
     expect(order.total_price).to eq(40000)
   end
 
+  it "save user to order's user_id" do
+    user = create(:user)
+    order = create(:order, user: user)
+    expect(order.user_id).to eq(user.id)
+  end
+
 end
