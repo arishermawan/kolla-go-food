@@ -151,4 +151,11 @@ describe Order do
     expect(order.user_id).to eq(user.id)
   end
 
+  it "is invalid if gopay credit less than total price of order" do
+    user = create(:user)
+    order = build(:order, payment_type: "Go Pay", total: 300000, user: user)
+    order.valid?
+    expect(order.errors[:payment_type]).to include("Gopay credit is not enough")
+  end
+
 end
