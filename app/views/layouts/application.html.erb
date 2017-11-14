@@ -16,20 +16,25 @@
     <div id="columns">
       <div id="side">
         <% if session[:user_id] %>
-          <ul>
-            <li><%= link_to 'Orders', orders_path %></li>
-            <li><%= link_to 'Vouchers', vouchers_path %></li>
-            <li><%= link_to 'Restaurants', restaurants_path %></li>
-            <li><%= link_to 'Category', categories_path %></li>
-            <li><%= link_to 'Tags', tags_path %></li>
-            <li><%= link_to 'Orders', orders_path %></li>
-            <li><%= link_to 'Foods', foods_path %></li>
-            <li><%= link_to 'Users', users_path %></li>
-            <li> </li>
-            <br>
-            <li><%= button_to 'Logout', logout_path, method: :delete %></li>
-          </ul>
-
+          <% if session[:user_roles].include?("administrator") %>
+            <ul>
+              <li><%= link_to 'Orders', orders_path %></li>
+              <li><%= link_to 'Vouchers', vouchers_path %></li>
+              <li><%= link_to 'Restaurants', restaurants_path %></li>
+              <li><%= link_to 'Category', categories_path %></li>
+              <li><%= link_to 'Tags', tags_path %></li>
+              <li><%= link_to 'Orders', orders_path %></li>
+              <li><%= link_to 'Foods', foods_path %></li>
+              <li><%= link_to 'Users', users_path %></li>
+              <br>
+            </ul>
+          <% else %>
+              <ul>
+                <li><%= link_to 'Users', users_path %></li>
+                <br>
+              </ul>
+          <% end %>
+          <strong><%= button_to 'Logout', logout_path, method: :delete %></strong>
         <% else %>
           <ul>
             <li><%= link_to 'Login', login_path %></li>

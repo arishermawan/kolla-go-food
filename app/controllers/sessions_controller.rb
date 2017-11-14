@@ -7,9 +7,10 @@ class SessionsController < ApplicationController
     user = User.find_by(username: params[:username])
     if user.try(:authenticate, params[:password])
       session[:user_id] = user.id
+      session[:user_roles] = user.roles.map { |role| role.name }
       redirect_to admin_url
     else
-      redirect_to login_url, alert: "invalid user/passoword combination"
+      redirect_to login_url, alert: "invalid user/password combination"
     end
   end
 

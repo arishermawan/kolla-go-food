@@ -19,6 +19,8 @@ gem 'seed_dump'
 
 gem 'groupdate'
 
+gem 'google_maps_service'
+
 gem 'bootstrap-sass', '3.3.7'
 
 # Use SCSS for stylesheets
