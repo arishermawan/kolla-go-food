@@ -6,7 +6,7 @@ FactoryGirl.define do
     restaurant_id 1
 
     # association :category
-     association :restaurant
+    association :restaurant
   end
 
   factory :invalid_food, parent: :food do

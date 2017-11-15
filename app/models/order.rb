@@ -34,20 +34,19 @@ class Order < ApplicationRecord
 
 
   def get_location
-    if !line_items.first.nil? && !line_items.first.food.restaurant.nil?
+    if !line_items.first.nil?
       gmaps = GoogleMapsService::Client.new(key: 'AIzaSyAT3fcxh_TKujSW6d6fP9cUtrexk0eEvAE')
       origins = line_items.first.food.restaurant.address
       destinations = address
-      if !origins.empty? && !destinations.empty?
+      # if !origins.empty? && !destinations.empty?
         matrix = gmaps.distance_matrix(origins, destinations,
           mode: 'driving',
           language: 'en-AU',
           avoid: 'tolls')
         matrix[:rows][0][:elements][0]
-      end
+      # end
     end
   end
-
 
   def distance
     if !get_location.nil?
@@ -59,7 +58,8 @@ class Order < ApplicationRecord
 
   def delivery_cost
     if !get_location.nil?
-      (distance.to_f / 1000) * 1500
+      cost = (distance.to_f / 1000) * 1500
+      cost.ceil
     end
   end
 
@@ -93,10 +93,6 @@ class Order < ApplicationRecord
       0
     end
   end
-
-  # def ensure_location_nil
-  #   get_location[:status] == "OK"
-  # end
 
   def total_price
     if !get_location.nil?
