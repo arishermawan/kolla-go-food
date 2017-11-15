@@ -164,4 +164,20 @@ describe Order do
     expect(order.reduce_gopay).to eq(150000)
   end
 
+  describe "adding google maps apis service"
+    before each do
+      @restaurant = create(:restaurant, address: "kolla sabang, jakarta")
+      @order = build(:order, address: "sarinah, jakarta")
+
+    end
+    it "calculate distance from origin and destination" do
+      expect(order.distance).to eq(325)
+    end
+
+    it "calculate delivary cost from distance" do
+      expect(order.delivery_cost).to eq(487,5)
+    end
+
+  end
+
 end
