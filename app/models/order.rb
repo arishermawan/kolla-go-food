@@ -28,6 +28,19 @@ class Order < ApplicationRecord
     line_items.reduce(0) { |sum, line_item| sum+line_item.total_price }
   end
 
+  def self.get_location
+    gmaps = GoogleMapsService::Client.new(key: 'AIzaSyAT3fcxh_TKujSW6d6fP9cUtrexk0eEvAE')
+    origins = ["Kolla Sabang"]
+      destinations = ["glodok, jakarta"]
+      matrix = gmaps.distance_matrix(origins, destinations,
+          mode: 'driving',
+          language: 'en-AU',
+          avoid: 'tolls')
+  end
+
+
+
+
   def reduce_gopay
     gopay =0
     if payment_type == "Go Pay"

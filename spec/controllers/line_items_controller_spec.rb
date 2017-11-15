@@ -95,5 +95,26 @@ describe LineItemsController do
       end
     end
 
+     context "with the different restaurant" do
+      before :each do
+        cart = create(:cart)
+        session[:cart_id] = cart.id
+        restaurant1 = create(:restaurant)
+        food1 = create(:food, restaurant: restaurant1)
+        restaurant2 = create(:restaurant)
+        food2 = create(:food, restaurant: restaurant2)
+
+        line_item1 = create(:line_item, food: food1, cart: cart)
+      end
+
+      it "doesn't save the new line_item in the database" do
+        expect{
+          post :create, params: { food_id: @food.id }
+        }.not_to change(LineItem, :count)
+      end
+
+
+    end
+
   end
 end
