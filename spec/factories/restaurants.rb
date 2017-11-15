@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :restaurant do
     sequence(:name) { |n| "Restaurant-#{n}" }
-    address "Ini Restaurant"
+    address "kolla sabang, jakarta"
   end
 
   factory :invalid_restaurant, parent: :restaurant do

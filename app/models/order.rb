@@ -16,6 +16,7 @@ class Order < ApplicationRecord
   validates :payment_type, inclusion: payment_types.keys
   validates_with VoucherValidator
   validates_with GopayValidator
+  validates_with LocationValidator
 
   def add_line_items(cart)
     cart.line_items.each do |item|
@@ -25,22 +26,41 @@ class Order < ApplicationRecord
   end
 
   def sub_total
-    line_items.reduce(0) { |sum, line_item| sum+line_item.total_price }
+    if !get_location.nil?
+      total = line_items.reduce(0) { |sum, line_item| sum+line_item.total_price }
+      total + delivery_cost
+    end
   end
 
+
+  def get_location
+    if !line_items.first.nil? && !line_items.first.food.restaurant.nil?
+      gmaps = GoogleMapsService::Client.new(key: 'AIzaSyAT3fcxh_TKujSW6d6fP9cUtrexk0eEvAE')
+      origins = line_items.first.food.restaurant.address
+      destinations = address
+      if !origins.empty? && !destinations.empty?
+        matrix = gmaps.distance_matrix(origins, destinations,
+          mode: 'driving',
+          language: 'en-AU',
+          avoid: 'tolls')
+        matrix[:rows][0][:elements][0]
+      end
+    end
+  end
+
+
   def distance
-    gmaps = GoogleMapsService::Client.new(key: 'AIzaSyAT3fcxh_TKujSW6d6fP9cUtrexk0eEvAE')
-    origins = line_items.first.food.restaurant.address
-    destinations = address
-    matrix = gmaps.distance_matrix(origins, destinations,
-      mode: 'driving',
-      language: 'en-AU',
-      avoid: 'tolls')
-    matrix[:rows][0][:elements][0][:distance][:value]
+    if !get_location.nil?
+      if get_location[:status] == "OK"
+        get_location[:distance][:value]
+      end
+    end
   end
 
   def delivery_cost
-    (distance.to_f / 1000) * 1500
+    if !get_location.nil?
+      (distance.to_f / 1000) * 1500
+    end
   end
 
   def reduce_gopay
@@ -74,8 +94,13 @@ class Order < ApplicationRecord
     end
   end
 
+  # def ensure_location_nil
+  #   get_location[:status] == "OK"
+  # end
 
   def total_price
-    (sub_total - discount) < 0 ? 0 : sub_total - discount
+    if !get_location.nil?
+      (sub_total - discount) < 0 ? 0 : sub_total - discount
+    end
   end
 end

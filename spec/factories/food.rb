@@ -3,9 +3,10 @@ FactoryGirl.define do
     sequence(:name) { |n| "Food-#{n}" }
     description { Faker::Food.ingredient }
     price 10000.0
+    restaurant_id 1
 
     # association :category
-    # association :restaurant
+     association :restaurant
   end
 
   factory :invalid_food, parent: :food do
