@@ -28,23 +28,20 @@ class Order < ApplicationRecord
     line_items.reduce(0) { |sum, line_item| sum+line_item.total_price }
   end
 
-
-
-{:destination_addresses=&gt;[&quot;Jalan M. H. Thamrin No. 11, Gondangdia, Menteng, RT.8/RW.4, Gondangdia, Menteng, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10350, Indonesia&quot;], :origin_addresses=&gt;[&quot;Jalan Haji Agus Salim No.32B, lantai 2, Kebon Sirih, Menteng, RT.2/RW.1, Kebon Sirih, Menteng, Central Jakarta City, Jakarta 10340, Indonesia&quot;], :rows=&gt;[{:elements=&gt;[{:distance=&gt;{:text=&gt;&quot;0.3 km&quot;, :value=&gt;325}, :duration=&gt;{:text=&gt;&quot;2 mins&quot;, :value=&gt;130}, :status=&gt;&quot;OK&quot;}]}], :status=&gt;&quot;OK&quot;}
-
-
-  def self.get_location
+  def distance
     gmaps = GoogleMapsService::Client.new(key: 'AIzaSyAT3fcxh_TKujSW6d6fP9cUtrexk0eEvAE')
-    origins = ["kolla sabang, jakarta"]
-      destinations = ["sarinah, jakarta"]
-      matrix = gmaps.distance_matrix(origins, destinations,
-          mode: 'driving',
-          language: 'en-AU',
-          avoid: 'tolls')
+    origins = line_items.first.food.restaurant.address
+    destinations = address
+    matrix = gmaps.distance_matrix(origins, destinations,
+      mode: 'driving',
+      language: 'en-AU',
+      avoid: 'tolls')
+    matrix[:rows][0][:elements][0][:distance][:value]
   end
 
-
-
+  def delivery_cost
+    (distance.to_f / 1000) * 1500
+  end
 
   def reduce_gopay
     gopay =0
