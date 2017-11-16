@@ -423,3 +423,12 @@ Voucher.create!([
   {code: "10PERSEN", valid_from: "2017-11-05", valid_through: "2017-11-13", amount: "10.0", unit_type: "% (Persentage)", max_amount: "20000.0"},
   {code: "GRATIS50K", valid_from: "2017-11-05", valid_through: "2017-11-05", amount: "50000.0", unit_type: "Rp (Rupiah)", max_amount: "50000.0"}
 ])
+
+
+Role.create!(
+  name: "administrator"
+)
+
+Role.create!(
+  name: "customer"
+)

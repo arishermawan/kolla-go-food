@@ -19,12 +19,12 @@
 
   <div class="field">
     <%= form.label :password %>
-    <%= form.text_field :password, size:40 %>
+    <%= form.password_field :password, size:40 %>
   </div>
 
   <div class="field">
     <%= form.label :password_confirmation, 'Confirm:' %>
-    <%= form.text_field :password_confirmation %>
+    <%= form.password_field :password_confirmation %>
   </div>
   <%#if session[:userid_roles].include?("administrator") %>
     <div class="field">
