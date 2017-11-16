@@ -2,8 +2,6 @@
   <div class="alert alert-danger" role="alert"><%= notice %></div>
 <% end %>
 
-<p><%= session[:user_id] %></p>
-<p><%= session[:user_roles] %></p>
 <% @restaurants.each do |r| %>
 
   <h1><%= r.name %> <%= link_to 'Write Review', new_restaurant_review_path(restaurant_id: r), :class => "btn btn-warning btn-sm" %> </h1>

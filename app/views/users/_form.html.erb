@@ -26,12 +26,14 @@
     <%= form.label :password_confirmation, 'Confirm:' %>
     <%= form.text_field :password_confirmation %>
   </div>
-  <div class="field">
-    <%= form.collection_check_boxes :role_ids, Role.all, :id, :name do |b| %>
-    <div class="box">
-      <%= b.check_box %>
-      <%= b.label %>
-    </div>
+  <%#if session[:userid_roles].include?("administrator") %>
+    <div class="field">
+      <%= form.collection_check_boxes :role_ids, Role.all, :id, :name do |b| %>
+      <div class="box">
+        <%= b.check_box %>
+        <%= b.label %>
+      </div>
+    <%# end %>
   <% end %>
   <div class="actions">
     <%= form.submit %>

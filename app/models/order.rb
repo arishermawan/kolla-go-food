@@ -27,9 +27,13 @@ class Order < ApplicationRecord
     end
   end
 
+  def api_key
+    api = 'AIzaSyAT3fcxh_TKujSW6d6fP9cUtrexk0eEvAE'
+  end
+
   def get_google_api
     if !line_items.first.nil?
-      gmaps = GoogleMapsService::Client.new(key: 'AIzaSyAT3fcxh_TKujSW6d6fP9cUtrexk0eEvAE')
+      gmaps = GoogleMapsService::Client.new(key: api_key)
       origins = line_items.first.food.restaurant.address
       destinations = address
       if !origins.empty? && !destinations.empty?
@@ -50,34 +54,36 @@ class Order < ApplicationRecord
   def delivery_cost
     if api_not_nil?
       cost = (distance.to_f / 1000) * 1500
-      cost.ceil
+      cost.round
     end
   end
 
   def sub_total
-    if api_not_nil?
       total = line_items.reduce(0) { |sum, line_item| sum+line_item.total_price }
-      total + delivery_cost
-    end
   end
 
+  def sub_total_delivery
+    if api_not_nil?
+      sub_total + delivery_cost
+    end
+  end
 
   def discount
     discount = 0
     if voucher != nil
-      dis = sub_total * voucher.amount / 100
+      dis = sub_total_delivery * voucher.amount / 100
       if voucher.unit_type == "% (Persentage)"
         dis < voucher.max_amount ? discount = dis : discount = voucher.max_amount
       elsif voucher.unit_type == "Rp (Rupiah)"
         voucher.amount < voucher.max_amount ? discount = voucher.amount : discount = voucher.max_amount
       end
     end
-    discount
+    discount.round
   end
 
   def total_price
     if api_not_nil?
-      (sub_total - discount) < 0 ? 0 : sub_total - discount
+      (sub_total_delivery - discount) < 0 ? 0 : sub_total_delivery - discount
     end
   end
 

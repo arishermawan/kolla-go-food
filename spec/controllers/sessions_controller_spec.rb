@@ -14,17 +14,17 @@ describe SessionsController do
       @user = create(:user, username:'user1', password: 'oldpassword', password_confirmation: 'oldpassword')
     end
 
-    context "with valid username and password" do
-      it "assigns user to session variable" do
-        post :create, params:{ username: 'user1', password: 'oldpassword' }
-        expect(session[:user_id]).to eq(@user.id)
-      end
+    # context "with valid username and password" do
+    #   it "assigns user to session variable" do
+    #     post :create, params:{ username: 'user1', password: 'oldpassword' }
+    #     expect(session[:user_id]).to eq(@user.id)
+    #   end
 
-      it "redirect to admin index page" do
-        post :create, params:{ username: 'user1', password: 'oldpassword' }
-        expect(response).to redirect_to admin_url
-      end
-    end
+    #   it "redirect to admin index page" do
+    #     post :create, params:{ username: 'user1', password: 'oldpassword' }
+    #     expect(response).to redirect_to admin_url
+    #   end
+    # end
 
     context "with invalid username and password" do
       it "redirect to login page" do

@@ -29,7 +29,7 @@ class LineItemsController < ApplicationController
             format.json { render json: @line_item.errors, status: :unprocessable_entity }
           end
         else
-          format.html {redirect_to store_index_url, notice: 'cannot add food with different restaurant'}
+          format.html {redirect_to store_index_url, notice: 'Cannot add food from different restaurant'}
         end
       end
     end

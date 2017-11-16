@@ -48,15 +48,16 @@ describe Order do
   describe "adding line_items from cart" do
     before :each do
       @cart = create(:cart)
-      @line_item = create(:line_item, cart: @cart)
+      @restaurant = create(:restaurant, address:"kolla sabang, jakarta")
+      @food = create(:food, restaurant: @restaurant)
+      @line_item = create(:line_item, food:@food, cart: @cart)
       @order = build(:order)
     end
 
     it "add line_items to order" do
-      expect{
         @order.add_line_items(@cart)
         @order.save
-      }.to change(@order.line_items, :count).by(1)
+       expect(@order.line_items.size).to eq(1)
     end
 
     it "removes line_items from cart" do
@@ -81,7 +82,12 @@ describe Order do
 
       it "can calculate sub total price" do
         @order.save
-        expect(@order.sub_total).to eq(100488)
+        expect(@order.sub_total).to eq(100000)
+      end
+
+      it "can calculate sub total + delivery_cost" do
+        @order.save
+        expect(@order.sub_total_delivery).to eq(100488)
       end
 
       context "with voucher in percent" do
@@ -90,7 +96,7 @@ describe Order do
           order = create(:order, voucher: voucher)
           order.add_line_items(@cart)
           order.save
-          expect(order.discount).to eq(5024.4)
+          expect(order.discount).to eq(5024)
         end
 
         it "changes discount to max_amount if discount is bigger than max_amount" do
@@ -165,8 +171,12 @@ describe Order do
       @line_item = create(:line_item, food:@food, cart:@cart)
       @order = build(:order, address: "sarinah, jakarta")
       @order.add_line_items(@cart)
-
     end
+
+    it "get json data from google api" do
+      expect(@order.get_google_api).not_to eq(nil)
+    end
+
     it "calculate distance from origin and destination" do
       expect(@order.distance).to eq(325)
     end
