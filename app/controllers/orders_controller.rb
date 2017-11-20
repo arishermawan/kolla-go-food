@@ -33,7 +33,7 @@ class OrdersController < ApplicationController
         User.update_gopay_from_order(@order)
 
         # OrderMailer.received(@order).deliver_later # Active Jobs Asyncronus
-        # OrderMailer.received(@order).deliver # Syncronus
+        OrderMailer.received(@order).deliver # Syncronus
 
         format.html{render :show, notice: "orders succesfully saved"}
       else
