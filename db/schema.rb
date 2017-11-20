@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171114024657) do
+ActiveRecord::Schema.define(version: 20171120010827) do
 
   create_table "assignments", force: :cascade do |t|
     t.integer "user_id"
@@ -81,6 +81,9 @@ ActiveRecord::Schema.define(version: 20171114024657) do
     t.integer "voucher_id"
     t.decimal "total"
     t.integer "user_id"
+    t.decimal "sub_total"
+    t.decimal "discount"
+    t.decimal "delivery_cost"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 

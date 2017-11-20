@@ -2,9 +2,10 @@ class Order < ApplicationRecord
 
   attr_accessor :voucher_code
 
+  has_many :line_items, dependent: :destroy
+
   belongs_to :voucher, optional:true
   belongs_to :user
-  has_many :line_items, dependent: :destroy
 
   enum payment_type: {
     "Cash" => 0,
@@ -19,6 +20,8 @@ class Order < ApplicationRecord
   validates_with VoucherValidator
   validates_with GopayValidator
   validates_with LocationValidator
+
+  before_save :total_price, :discount, :delivery_cost
 
   def add_line_items(cart)
     cart.line_items.each do |item|
@@ -51,15 +54,20 @@ class Order < ApplicationRecord
     end
   end
 
+  def cost_per_km
+    1500
+  end
+
   def delivery_cost
+    cost = 0
     if api_not_nil?
-      cost = (distance.to_f / 1000) * 1500
-      cost.round
+      cost = (distance.to_f / 1000) * cost_per_km
     end
+    self.delivery_cost = cost.round
   end
 
   def sub_total
-      total = line_items.reduce(0) { |sum, line_item| sum+line_item.total_price }
+    self.sub_total = line_items.reduce(0) { |sum, line_item| sum+line_item.total_price }
   end
 
   def sub_total_delivery
@@ -78,13 +86,15 @@ class Order < ApplicationRecord
         voucher.amount < voucher.max_amount ? discount = voucher.amount : discount = voucher.max_amount
       end
     end
-    discount.round
+    self.discount = discount.round
   end
 
   def total_price
+    total = 0
     if api_not_nil?
-      (sub_total_delivery - discount) < 0 ? 0 : sub_total_delivery - discount
+      (sub_total_delivery - discount) < 0 ? total = 0 : total = sub_total_delivery - discount
     end
+    self.total = total
   end
 
   def reduce_gopay

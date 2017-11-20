@@ -25,7 +25,7 @@ class OrdersController < ApplicationController
       @order.voucher_id = Voucher.find_by(code: @order.voucher_code).id
     end
     @order.user_id = session[:user_id]
-    @order.total = @order.total_price
+
     respond_to do |format|
       if @order.save
         Cart.destroy(session[:cart_id])
