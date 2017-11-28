@@ -1,9 +1,11 @@
-<p id="notice"><%= notice %></p>
+<% if !notice.nil? %>
+  <div class="alert alert-danger" role="alert"><%= notice %></div>
+<% end %>
 
 <% @restaurants.each do |r| %>
 
   <h1><%= r.name %> <%= link_to 'Write Review', new_restaurant_review_path(restaurant_id: r), :class => "btn btn-warning btn-sm" %> </h1>
-  <h3><%= r.address %></h3>
+  <h4><%= r.address %></h4>
 
   <% @foods = r.foods %>
   <%= render 'store/foods' %>

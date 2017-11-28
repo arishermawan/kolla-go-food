@@ -67,4 +67,43 @@ describe User do
       expect(@user.valid?).to eq(true)
     end
   end
+
+  context "add gopay attributes" do
+    before :each do
+      @user = create(:user)
+    end
+
+    it "is valid with default value 200000" do
+      expect(@user.gopay).to eq(200000)
+    end
+
+    it "is invalid with default value 200000" do
+      expect(@user.gopay).to eq(200000)
+    end
+
+    it "is invalid if gopay less than 0.01" do
+      user1 = build(:user, gopay:0)
+      user1.valid?
+      expect(user1.errors[:gopay]).to include("must be greater than or equal to 0.01")
+    end
+
+    it "is invalid gopay non numeric" do
+      user = build(:user, gopay:"dollar")
+      user.valid?
+      expect(user.errors[:gopay]).to include("is not a number")
+    end
+
+    it "is invalid gopay nil" do
+      user = build(:user, gopay:nil)
+      user.valid?
+      expect(user.errors[:gopay]).to include("can't be blank")
+    end
+
+    # it "reduce gopay after order save" do
+    #   user = create(:user)
+    #   order = create(:order, payment_type: "Go Pay", total: 50000, user: user)
+    #   User.update_gopay_from_order(order)
+    #   expect(user.gopay).to eq(150000)
+    # end
+  end
 end

@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   get 'dashboard' => 'dashboard#index'
 
   get 'admin' => 'admin#index'
+
+
   post 'admin' => 'admin#index'
   get 'orders/search' => 'orders#search'
   post 'orders/search' => 'orders#search'
@@ -31,6 +33,8 @@ Rails.application.routes.draw do
   get 'store/index'
   get 'home/hello'
   get 'home/goodbye'
+
+  get '/users/:id/topup', to: 'users#topup', as: 'user_topup'
 
   controller :sessions do
     get 'login' => :new

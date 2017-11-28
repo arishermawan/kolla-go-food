@@ -8,17 +8,15 @@ RSpec.describe StoreController, type: :controller do
       expect(response).to have_http_status(:success)
     end
 
-    it "retunn a list of foods, ordered by name" do
-      nasi_rames = create(:food, name: "Nasi Rames")
-      kerak_telor = create(:food, name: "Kerak telor")
+    it "retunn a list of restaurants" do
+      restaurant1 = create(:restaurant)
+      restaurant2 = create(:restaurant)
       get :index
-      expect(assigns(:foods)).to eq([kerak_telor, nasi_rames])
+      expect(assigns(:restaurants)).to eq([restaurant1, restaurant2])
     end
-
 
     it "includes CurrentCart" do
       expect(StoreController.ancestors.include? CurrentCart).to eq(true)
     end
   end
-
 end

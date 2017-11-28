@@ -94,6 +94,8 @@ describe OrdersController do
         @cart = create(:cart)
         session[:cart_id] = @cart.id
       end
+
+
       it "save the new order in the database" do
         expect{
         post :create, params:{ order: attributes_for(:order) }
@@ -111,10 +113,10 @@ describe OrdersController do
         expect(session[:cart_id]).to eq(nil)
       end
 
-      it "redirect to store index" do
+      it "redirect to to detail order" do
         post :create, params:{ order: attributes_for(:order) }
-        expect(response).to redirect_to store_index_url
-      end
+        expect(response).to render_template :show
+        end
 
       it "sends order confirmation email" do
         expect{
@@ -135,6 +137,7 @@ describe OrdersController do
         expect(response).to render_template :new
       end
     end
+
   end
 
   describe 'GET #update' do

@@ -1,3 +1,4 @@
+<div class="container-fluid">
 <%= form_for(order) do |form| %>
   <% if order.errors.any? %>
     <div id="error_explanation">
@@ -11,27 +12,27 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :name, size:30 %>
     <%= form.text_field :name, size:40 %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :address %>
     <%= form.text_area :address, rows:3, cols:60 %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :email %>
     <%= form.text_field :email, size:40 %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :payment_type %>
     <%= form.select :payment_type, Order.payment_types.keys, prompt:"Select a payment type", size:40 %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :voucher_code %>
     <%= form.text_field :voucher_code, size:40 %>
   </div>
@@ -41,3 +42,5 @@
     <%= form.submit "Place Order" %>
   </div>
 <% end %>
+
+</div>

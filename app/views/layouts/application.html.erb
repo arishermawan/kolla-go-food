@@ -16,20 +16,20 @@
     <div id="columns">
       <div id="side">
         <% if session[:user_id] %>
-          <ul>
-            <li><%= link_to 'Orders', orders_path %></li>
-            <li><%= link_to 'Vouchers', vouchers_path %></li>
-            <li><%= link_to 'Restaurants', restaurants_path %></li>
-            <li><%= link_to 'Category', categories_path %></li>
-            <li><%= link_to 'Tags', tags_path %></li>
-            <li><%= link_to 'Orders', orders_path %></li>
-            <li><%= link_to 'Foods', foods_path %></li>
-            <li><%= link_to 'Users', users_path %></li>
-            <li> </li>
-            <br>
-            <li><%= button_to 'Logout', logout_path, method: :delete %></li>
-          </ul>
-
+          <% if session[:userid_roles].include?("administrator") %>
+            <ul>
+              <li><%= link_to 'Orders', orders_path %></li>
+              <li><%= link_to 'Vouchers', vouchers_path %></li>
+              <li><%= link_to 'Restaurants', restaurants_path %></li>
+              <li><%= link_to 'Category', categories_path %></li>
+              <li><%= link_to 'Tags', tags_path %></li>
+              <li><%= link_to 'Orders', orders_path %></li>
+              <li><%= link_to 'Foods', foods_path %></li>
+              <li><%= link_to 'Users', users_path %></li>
+              <br>
+            </ul>
+          <% end %>
+          <strong><%= button_to 'Logout', logout_path, method: :delete %></strong>
         <% else %>
           <ul>
             <li><%= link_to 'Login', login_path %></li>
@@ -44,15 +44,18 @@
         <% end %>
       </div>
         <ul>
+        <br>
+        <br>
           <li><%= link_to 'Home', store_index_path %></li>
-          <li><a href="#">My Account</a></li>
-          <li><a href="#">My Orders</a></li>
+          <% if session[:user_id] %>
+            <li><%= link_to 'My Account', user_path(id: session[:user_id]) %></li>
+            <% end %>
         </ul>
 
         <br>
         <br>
         <div style="color: white;">
-          <h3>By Restaurant</h3>
+          <h4>By Restaurant</h4>
           <ul>
           <% @res=Restaurant.all %>
           <% @res.each do |r| %>
@@ -64,7 +67,7 @@
         </div>
 
         <div style="color: white;">
-          <h3>By Category</h3>
+          <h4>By Category</h4>
           <ul>
           <% @cat=Category.all %>
           <% @cat.each do |category| %>

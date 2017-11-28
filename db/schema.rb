@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171110063748) do
+ActiveRecord::Schema.define(version: 20171120010827) do
+
+  create_table "assignments", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "role_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["role_id"], name: "index_assignments_on_role_id"
+    t.index ["user_id"], name: "index_assignments_on_user_id"
+  end
 
   create_table "buyers", force: :cascade do |t|
     t.string "email"
@@ -71,6 +80,11 @@ ActiveRecord::Schema.define(version: 20171110063748) do
     t.datetime "updated_at", null: false
     t.integer "voucher_id"
     t.decimal "total"
+    t.integer "user_id"
+    t.decimal "sub_total"
+    t.decimal "discount"
+    t.decimal "delivery_cost"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "restaurants", force: :cascade do |t|
@@ -91,6 +105,12 @@ ActiveRecord::Schema.define(version: 20171110063748) do
     t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable_type_and_reviewable_id"
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tags", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -102,6 +122,7 @@ ActiveRecord::Schema.define(version: 20171110063748) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "gopay", default: "200000.0", null: false
   end
 
   create_table "vouchers", force: :cascade do |t|

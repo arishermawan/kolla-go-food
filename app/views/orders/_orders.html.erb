@@ -19,7 +19,7 @@
     <td><%= o.payment_type %></td>
 
     <td><% if o.voucher != nil  %><%= o.voucher.code %> <% end %> </td>
-    <td><%= number_to_currency(o.total_price, unit: "Rp ", delimiter: ".", separator: ",")  %></td>
+    <td><%= number_to_currency(o.total, unit: "Rp ", delimiter: ".", separator: ",")  %></td>
     <td>  <%= link_to 'Show', o %>
           <%= link_to 'Edit', edit_order_path(o) %>
           <%= link_to 'Destroy', o, method: :delete, data: { confirm: 'Are you sure?' } %>
