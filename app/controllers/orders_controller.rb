@@ -30,7 +30,7 @@ class OrdersController < ApplicationController
       if @order.save
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
-        User.update_gopay_from_order(@order)
+        # User.update_gopay_from_order(@order)
 
         # OrderMailer.received(@order).deliver_later # Active Jobs Asyncronus
         OrderMailer.received(@order).deliver # Syncronus

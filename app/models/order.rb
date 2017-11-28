@@ -22,6 +22,8 @@ class Order < ApplicationRecord
   validates_with LocationValidator
 
   before_save :total_price, :discount, :delivery_cost
+  after_save :reduce_gopay
+  # after_save :User.find(order.user_id).update(gopay: order.reduce_gopay)
 
   def add_line_items(cart)
     cart.line_items.each do |item|
@@ -67,13 +69,16 @@ class Order < ApplicationRecord
   end
 
   def sub_total
-    self.sub_total = line_items.reduce(0) { |sum, line_item| sum+line_item.total_price }
+    sub_total = line_items.reduce(0) { |sum, line_item| sum+line_item.total_price }
+    self.sub_total = sub_total
   end
 
   def sub_total_delivery
+    delivery = 0
     if api_not_nil?
-      sub_total + delivery_cost
+      delivery = sub_total + delivery_cost
     end
+    delivery
   end
 
   def discount
@@ -98,12 +103,12 @@ class Order < ApplicationRecord
   end
 
   def reduce_gopay
-    gopay =0
     if payment_type == "Go Pay"
-      gopay = User.find(user_id).gopay
+      user = User.find(user_id)
+      gopay = user.gopay
       gopay -= total
+      user.update(gopay: gopay)
     end
-    gopay
   end
 
   def api_not_nil?
