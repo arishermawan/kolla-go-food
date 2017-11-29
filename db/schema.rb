@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171120010827) do
+ActiveRecord::Schema.define(version: 20171129012633) do
 
   create_table "assignments", force: :cascade do |t|
     t.integer "user_id"
@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(version: 20171120010827) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "gopay", default: "200000.0", null: false
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
   create_table "vouchers", force: :cascade do |t|
