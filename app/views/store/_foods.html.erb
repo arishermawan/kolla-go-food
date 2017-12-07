@@ -1,32 +1,22 @@
+<div class="row">
 <% @foods.each do |food| %>
-  <div class="entry">
-    <%= image_tag(food.image_url) %>
 
-    <h3><%= link_to food.name, food_path(food) %>
-      <% if food.category_id != nil  %>
-        (<%= food.category.name %>)
-      <% end %>
-    </h3>
 
-    <%= sanitize(food.description) %>
-
-    <div class="price_line">
-      <span class="price">
-        <%= number_to_currency(food.price, unit: "Rp ", delimiter: ".", separator: ",") %>
-        <%= button_to 'Add to Cart', line_items_path(food_id: food), remote:true, :class => "btn btn-success btn-sm" %>
-        <%= button_to 'Write Review', new_food_review_path(food_id: food), :class => "btn btn-warning btn-sm"  %>
-      </span>
+  <div class="col-sm-6 col-md-3">
+    <div class="thumbnail">
+      <%= image_tag(food.image_url) %>
+      <div class="caption">
+        <h3><%= link_to food.name, food_path(food) %></h3>
+        <p><%= sanitize(food.description) %></p>
+        <p><%= number_to_currency(food.price, unit: "Rp ", delimiter: ".", separator: ",") %></p>
+          <div style="vertical-align: inherit;">
+          <%= button_to 'Add to Cart', line_items_path(food_id: food), remote:true, :class => "btn btn-success btn-sm", :role => "button" %> <%= button_to 'Write Review', new_food_review_path(food_id: food), :class => "btn btn-warning btn-sm", :role => "button"  %>
+          </div>
+      </div>
     </div>
-
-    <%if food.tags != nil %>
-      <p>
-      <% food.tags.each do |f| %>
-          <span class="label label-info">
-            <%= f.name %>
-          </span>
-          &nbsp;
-      <% end %>
-      </p>
-    <% end %>
   </div>
+
 <% end %>
+
+
+</div>
