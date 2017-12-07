@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :authorize
   protect_from_forgery with: :exception
+  # protect_from_forgery with: :null_session
 
   protected
     def authorize
