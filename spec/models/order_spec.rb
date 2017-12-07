@@ -157,13 +157,13 @@ describe Order do
     expect(order.errors[:payment_type]).to include("Gopay credit is not enough")
   end
 
-  it "is reduce the gopay credit" do
-    user = create(:user)
-    order = create(:order, payment_type: "Go Pay", total: 50000, user: user)
-    order.reduce_gopay
-    user.reload
-    expect(user.gopay).to eq(150000)
-  end
+  # it "is reduce the gopay credit" do
+  #   user = create(:user)
+  #   order = create(:order, payment_type: "Go Pay", total: 50000, user: user)
+  #   order.reduce_gopay
+  #   user.reload
+  #   expect(user.gopay).to eq(150000)
+  # end
 
   describe "adding google maps apis service" do
     before :each do

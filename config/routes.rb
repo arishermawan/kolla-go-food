@@ -22,6 +22,12 @@ Rails.application.routes.draw do
   resources :tags
   resources :reviews
 
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :foods
+    end
+  end
+
   resources :foods do
     resources :reviews
   end
