@@ -201,6 +201,8 @@ GEM
       rspec-mocks (~> 3.7.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.0)
+    rspec_junit_formatter (0.3.0)
+      rspec-core (>= 2, < 4, != 2.12.0)
     ruby_dep (1.5.0)
     rubyzip (1.2.1)
     safe_yaml (1.0.4)
@@ -289,6 +291,7 @@ DEPENDENCIES
   rails-controller-testing
   redis (~> 3.0)
   rspec-rails (>= 3.5.2)
+  rspec_junit_formatter
   sass-rails (~> 5.0)
   seed_dump
   selenium-webdriver

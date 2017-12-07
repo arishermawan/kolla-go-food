@@ -71,6 +71,7 @@ group :test do
   gem 'launchy',"~> 2.4.2"
   # gem 'selenium-webdriver',"-> 2.43.0"
   gem 'email_spec'
+  gem "rspec_junit_formatter"
 end
 
 
