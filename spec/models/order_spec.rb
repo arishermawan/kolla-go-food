@@ -96,7 +96,7 @@ describe Order do
           order = create(:order, voucher: voucher)
           order.add_line_items(@cart)
           order.save
-          expect(order.discount).to eq(5024)
+          expect(order.discount).to eq(5027)
         end
 
         it "changes discount to max_amount if discount is bigger than max_amount" do
@@ -180,11 +180,11 @@ describe Order do
     end
 
     it "calculate distance from origin and destination" do
-      expect(@order.distance).to eq(325)
+      expect(@order.distance).to eq(364)
     end
 
     it "calculate delivary cost from distance" do
-      expect(@order.delivery_cost).to eq(488)
+      expect(@order.delivery_cost).to eq(546)
     end
   end
 end
