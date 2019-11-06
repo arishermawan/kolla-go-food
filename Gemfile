@@ -25,7 +25,7 @@ gem "active_model_serializers"
 
 gem 'google_maps_service'
 
-gem 'bootstrap-sass', '3.3.7'
+gem 'bootstrap-sass', '3.4.1'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
